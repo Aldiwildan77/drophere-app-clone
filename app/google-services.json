@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "920196033077",
+    "firebase_url": "https://drophere-clone.firebaseio.com",
+    "project_id": "drophere-clone",
+    "storage_bucket": "drophere-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920196033077:android:1c7c15a6ee2b9018935f7c",
+        "android_client_info": {
+          "package_name": "com.papbl.drophereclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920196033077-jscsavhmaikkrcuvpuo021kfmqan5guh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJRZqvLlRdF0zMeKs4TQAU49GGOayIP1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920196033077-jscsavhmaikkrcuvpuo021kfmqan5guh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
