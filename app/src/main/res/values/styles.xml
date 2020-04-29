@@ -1,11 +1,45 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="backgroundColor">@color/colorAppBackground</item>
+    </style>
+
+    <style name="ChipTheme" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/colorSuccess</item>
+        <item name="android:textAppearance">?attr/textAppearanceOverline</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:text">@string/chips_submit_late</item>
+        <item name="chipMinTouchTargetSize">@dimen/zero_dimens</item>
+        <item name="checkedIconEnabled">false</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="ButtonPrimary" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/colorTextWhite</item>
+        <item name="cornerRadius">@dimen/border_button</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
+    </style>
+
+    <style name="ButtonSecondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="cornerRadius">@dimen/border_button</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
+    </style>
+
+    <style name="ButtonText" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
+    </style>
+
+    <style name="Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardBackgroundColor">@color/colorAppBackground</item>
+        <item name="cardForegroundColor">@android:color/transparent</item>
     </style>
 
 </resources>

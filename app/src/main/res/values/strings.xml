@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">Drophere Clone</string>
+
+    <string name="chips_submit_late">TERLAMBAT</string>
+    <string name="chips_submit_on_time">TEPAT WAKTU</string>
+
+    <string name="button_submit_file">Unggah Berkas</string>
+    <string name="button_download_file">Unduh Berkas</string>
+    <string name="button_upload_file">Unggah Berkas</string>
+    <string name="button_create_page">Buat Halaman</string>
+    <string name="button_edit_changes">Simpan Perubahan</string>
+    <string name="button_login_account">Masuk</string>
+    <string name="button_register_account">Buat Akun Baru</string>
+    <string name="button_reset_password">Reset Password</string>
+
+    <string name="dialog_submit">Kumpulkan</string>
+
+    <!--  Component Card Pages  -->
+    <string name="card_pages_ib_deadline">ImageButton of Deadline</string>
+    <string name="card_pages_ib_popup_menu">ImageButton of Popup Menu</string>
+    <string name="card_pages_tv_no_due_date">NO DUE DATE</string>
+    <string name="card_pages_tv_title">Pengumpulan Laporan Praktikum Pemrograman Dasar</string>
+    <string name="card_pages_tv_unique_code">Kode Unik Pengumpulan</string>
+    <string name="card_pages_tv_unique_code_value">557as9p1</string>
+    <string name="card_pages_ib_copy">ImageButton of Copy</string>
+
+    <!--  Component Card Submit  -->
+    <string name="card_submit_ib_sender_download">ImageButton of Download File</string>
+    <string name="card_submit_tv_sender_file">Pemrograman_dasar_175150201111079.pdf</string>
+    <string name="card_submit_tv_sender_name">Gilang Nur Aidi</string>
+    <string name="card_submit_ib_sender_icon">ImageButton of Sender Icon</string>
+    <string name="card_submit_ib_deadline_info">ImageButton of Deadline Info</string>
+    <string name="card_submit_tv_sender_date">6 Mar 2020, 00:05</string>
+
+    <!--  Bottom Navigation View -->
+    <string name="menu_item_home">Beranda</string>
+    <string name="menu_item_user">Profil</string>
+    <string name="menu_item_add">Tambah</string>
+
 </resources>

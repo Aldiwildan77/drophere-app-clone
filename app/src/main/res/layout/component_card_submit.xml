@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Card"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginHorizontal="@dimen/margin_vertical_extra_small">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_vertical_extra_small">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_submit_status"
+            style="@style/ChipTheme"
+            android:layout_width="92.7dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_sender_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_horizontal"
+            android:text="@string/card_submit_tv_sender_date"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/chip_submit_status"
+            app:layout_constraintEnd_toStartOf="@+id/ib_deadline_info"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_deadline_info"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:contentDescription="@string/card_submit_ib_deadline_info"
+            android:src="@drawable/ic_mdi_alarm"
+            app:layout_constraintBottom_toBottomOf="@+id/chip_submit_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_sender_icon"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:contentDescription="@string/card_submit_ib_sender_icon"
+            android:src="@drawable/ic_mdi_perm_identity"
+            app:layout_constraintBottom_toTopOf="@+id/tv_sender_file"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_sender_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal"
+            android:text="@string/card_submit_tv_sender_name"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/colorText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_sender_file"
+            app:layout_constraintStart_toEndOf="@+id/ib_sender_icon"
+            app:layout_constraintTop_toTopOf="@+id/ib_sender_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_sender_file"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/card_submit_tv_sender_file"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_sender_download"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/card_submit_ib_sender_download"
+            android:src="@drawable/ic_mdi_cloud_download"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
