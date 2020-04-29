@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="app_bar_elevation" type="dimen" format="float">4dp</item>
-    <item name="zero_dimens" type="dimen" format="float">0dp</item>
+    <item name="app_bar_elevation" type="dimen">4dp</item>
+    <item name="zero_dimens" type="dimen">0dp</item>
 
-    <item name="margin_horizontal" type="dimen" format="float">10.7dp</item>
-    <item name="margin_vertical_extra_large" type="dimen" format="float">53.3dp</item>
-    <item name="margin_vertical_large" type="dimen" format="float">33.3dp</item>
-    <item name="margin_vertical_medium" type="dimen" format="float">26.7dp</item>
-    <item name="margin_vertical_small" type="dimen" format="float">16.0dp</item>
-    <item name="margin_vertical_extra_small" type="dimen" format="float">10.7dp</item>
-    <item name="margin_vertical_tiny" type="dimen" format="float">5.3dp</item>
+    <item name="margin_horizontal" type="dimen">10.7dp</item>
+    <item name="margin_vertical_extra_large" type="dimen">53.3dp</item>
+    <item name="margin_vertical_large" type="dimen">33.3dp</item>
+    <item name="margin_vertical_medium" type="dimen">26.7dp</item>
+    <item name="margin_vertical_small" type="dimen">16dp</item>
+    <item name="margin_vertical_extra_small" type="dimen">10.7dp</item>
+    <item name="margin_vertical_tiny" type="dimen">5.3dp</item>
 
-    <item name="border_button" type="dimen" format="float">5.3dp</item>
+    <item name="border_button" type="dimen">5.3dp</item>
 
-    <item name="card_corner_radius" type="dimen" format="float">5.3dp</item>
-    <item name="card_elevation" type="dimen" format="float">2dp</item>
+    <item name="card_corner_radius" type="dimen">5.3dp</item>
+    <item name="card_elevation" type="dimen">2dp</item>
 
-    <item name="button_height" type="dimen" format="float">64dp</item>
+    <item name="button_height" type="dimen">64dp</item>
 
 </resources>

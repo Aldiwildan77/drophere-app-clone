@@ -14,6 +14,7 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_submit_status"
             style="@style/ChipTheme"
+            android:text="@string/chips_submit_on_time"
             android:layout_width="92.7dp"
             android:layout_height="24dp"
             app:layout_constraintStart_toStartOf="parent"
