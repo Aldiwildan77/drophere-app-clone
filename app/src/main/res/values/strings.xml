@@ -36,5 +36,11 @@
     <string name="menu_item_home">Beranda</string>
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
+    <string name="on_boarding_1_title">Waktu sisanya bisa kamu pakai untuk jalan-jalan</string>
+    <string name="on_boarding_1_content">Pantau pengumpulannya, dalam genggamanmu. Beri tanda dan pelajaran untuk yang tidak tepat waktu dalam pengumpulan.</string>
+    <string name="on_boarding_skip">lewati</string>
+    <string name="on_boarding_next">lanjut</string>
+    <string name="tilte_on_boarding_2">Buat pengumpulanmu semudah berkirim pesan</string>
+    <string name="content_on_boarding_2">Santai, dan biarkan kami yang urus untukmu. Hanya 5 menit kalau kamu menunda-nunda proses pembuatannya</string>
 
 </resources>
