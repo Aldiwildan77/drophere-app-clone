@@ -37,4 +37,13 @@
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
 
+    <!--  Forgot Password Activity -->
+    <string name="tv_reset_password_detail">Berikan emailmu yang terdaftar, dan kami akan urus sisanya. Jangan lupa cek kontak masuk untuk link reset password.</string>
+    <string name="tv_reset_password_title">Jangan Panik</string>
+    <string name="til_reset_password_label">Email</string>
+    <string name="toast_reset_password_success">Email reset password berhasil dikirim</string>
+    <string name="toast_reset_password_failed">Email anda belum terdaftar</string>
+    <string name="error_reset_password_email_is_empty">Email tidak boleh kosong</string>
+    <string name="error_reset_password_email_not_valid">Email anda tidak valid, cth: GilangNur29@gmail.com</string>
+
 </resources>
