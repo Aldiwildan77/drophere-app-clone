@@ -17,6 +17,9 @@ import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Comparator
@@ -91,9 +94,11 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                     val simpleDateFormat =
                         SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
                     simpleDateFormat.setTimeZone(TimeZone.getDefault())
+                    val ownerId = document.data.get("owner_id").toString()
+                    val uniqueCode = document.data.get("unique_code").toString()
                     tvDeadline.setText(simpleDateFormat.format(deadline.toDate()))
                     tvTitle.setText(document.data.get("title").toString())
-                    tvUniqueCode.setText(document.data.get("unique_code").toString())
+                    tvUniqueCode.setText(uniqueCode)
                     val senders = document.data.get("senders") as ArrayList<Map<Any, Any>>
                     Collections.sort(senders, object : Comparator<Map<Any, Any>> {
                         override fun compare(obj1: Map<Any, Any>, obj2: Map<Any, Any>): Int {
@@ -112,7 +117,7 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     rvFileTerkumpul.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = PengumpulanAdapter(senderData, tvDeadline.text.toString())
+                        adapter = PengumpulanAdapter(senderData, tvDeadline.text.toString(), ownerId, uniqueCode)
                     }
                 }
             }
