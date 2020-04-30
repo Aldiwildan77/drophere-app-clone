@@ -51,8 +51,7 @@ class PengumpulanHolder(
     val uniqueCode: String
 ) :
     RecyclerView.ViewHolder(v), View.OnClickListener {
-    private val storage = Firebase.storage
-    private val storageRef = storage.reference
+    private val storageRef = Firebase.storage.reference
     private lateinit var fileRef: StorageReference
 
     private var chipSubmitStatus = itemView.findViewById<Chip>(R.id.chip_submit_status)
@@ -66,7 +65,6 @@ class PengumpulanHolder(
 
     fun bind(senderData: SenderData) {
         fileRef = storageRef.child(ownerId + "_" + uniqueCode + "/" + senderData.fileName)
-
         val dateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
         dateFormat.setTimeZone(TimeZone.getDefault())
         val deadlineDate = dateFormat.parse(deadline)
@@ -88,9 +86,13 @@ class PengumpulanHolder(
         val fileDir =
             v.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + ownerId + "_" + uniqueCode)
         val file = File(fileDir, fileName)
-
+        Log.d("Cek ", fileRef.toString())
         fileRef.getFile(file).addOnSuccessListener {
-            val toast = Toast.makeText(v.context, "Berhasil mengunduh file milik ${senderName}", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(
+                v.context,
+                "Berhasil mengunduh file milik ${senderName}",
+                Toast.LENGTH_SHORT
+            )
             val layout = toast.view as LinearLayout
             val text = layout.getChildAt(0) as TextView
             text.gravity = Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL

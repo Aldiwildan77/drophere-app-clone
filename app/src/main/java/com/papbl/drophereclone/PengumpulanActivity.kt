@@ -4,6 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
@@ -15,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Comparator
@@ -34,19 +36,25 @@ data class SenderData(
 
 class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     PopupMenu.OnMenuItemClickListener {
-    private val mAuth = FirebaseAuth.getInstance()
+    //    private val mAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val pageCollection = db.collection("pages")
+    private val storageRef = Firebase.storage.reference
 
     private lateinit var tvDeadline: MaterialTextView
     private lateinit var tvTitle: MaterialTextView
     private lateinit var tvUniqueCode: MaterialTextView
     private lateinit var ibUniqueCode: ImageButton
     private lateinit var ibPopupAction: ImageButton
-    private  lateinit var btnUndugBerkas: MaterialButton
+    private lateinit var btnUndugBerkas: MaterialButton
     private lateinit var rvFileTerkumpul: RecyclerView
 
+    private lateinit var senders: ArrayList<Map<Any, Any>>
     private var senderData: ArrayList<SenderData> = ArrayList()
+    private var fileNames: ArrayList<String> = ArrayList()
+
+    private lateinit var ownerId: String
+    private lateinit var uniqueCode: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,13 +81,16 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                 val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip: ClipData = ClipData.newPlainText("Cek", tvUniqueCode.text)
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(this, "Copy to Clipboard", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Kode unik berhasil disalin", Toast.LENGTH_SHORT).show()
             }
             ibPopupAction.id -> {
                 showActionMenu(v)
             }
             btnUndugBerkas.id -> {
-                Toast.makeText(this, "Unduh semua berkas", Toast.LENGTH_SHORT).show()
+                val fileDir =
+                    getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + ownerId + "_" + uniqueCode)
+                val folderRef = storageRef.child(ownerId + "_" + uniqueCode)
+                downloadAllFile(fileDir, folderRef)
             }
         }
     }
@@ -94,12 +105,12 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                     val simpleDateFormat =
                         SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
                     simpleDateFormat.setTimeZone(TimeZone.getDefault())
-                    val ownerId = document.data.get("owner_id").toString()
-                    val uniqueCode = document.data.get("unique_code").toString()
+                    ownerId = document.data.get("owner_id").toString()
+                    uniqueCode = document.data.get("unique_code").toString()
                     tvDeadline.setText(simpleDateFormat.format(deadline.toDate()))
                     tvTitle.setText(document.data.get("title").toString())
                     tvUniqueCode.setText(uniqueCode)
-                    val senders = document.data.get("senders") as ArrayList<Map<Any, Any>>
+                    senders = document.data.get("senders") as ArrayList<Map<Any, Any>>
                     Collections.sort(senders, object : Comparator<Map<Any, Any>> {
                         override fun compare(obj1: Map<Any, Any>, obj2: Map<Any, Any>): Int {
                             val data1 = obj1.get("submit_at") as Timestamp
@@ -114,13 +125,40 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         val userId = it.get("user_id").toString()
                         val sender = SenderData(fileName, fullName, submitAt, userId)
                         senderData.add(sender)
+                        fileNames.add(fileName)
                     }
                     rvFileTerkumpul.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = PengumpulanAdapter(senderData, tvDeadline.text.toString(), ownerId, uniqueCode)
+                        adapter = PengumpulanAdapter(
+                            senderData,
+                            tvDeadline.text.toString(),
+                            ownerId,
+                            uniqueCode
+                        )
                     }
                 }
             }
+    }
+
+    fun downloadAllFile(fileDir: File?, folderRef: StorageReference) {
+        folderRef.listAll().addOnSuccessListener {
+            val total = it.items.size
+            var current = 0
+            it.items.forEachIndexed { index, fileRef ->
+                val fileName = fileNames.get(index)
+                val file = File(fileDir, fileName)
+                fileRef.getFile(file).addOnSuccessListener {
+                    current += 1
+                    Toast.makeText(
+                        this,
+                        "Berhasil mengunduh file (${current}/${total})",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.addOnFailureListener {
+                    Log.e("PengumpulanActivity", it.message.toString())
+                }
+            }
+        }
     }
 
     fun showActionMenu(v: View) {
