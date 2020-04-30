@@ -37,4 +37,10 @@
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
 
+    <!--  Action Pengumpulan -->
+    <string name="menu_item_edit">Edit</string>
+    <string name="menu_item_delete">Hapus</string>
+
+    <string name="file_terkumpul">File Terkumpul</string>
+
 </resources>
