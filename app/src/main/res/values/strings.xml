@@ -37,4 +37,27 @@
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
 
+    <!--  Submission Activity  -->
+    <string name="iv_upload_file">ImageView of Upload File</string>
+    <string name="tv_submission_title">Nunggu itu nggak enak. \nJangan telat ngumpulin ya</string>
+    <string name="tv_submission_description">loading..</string>
+    <string name="tv_submission_time_title">Waktu Tersisa</string>
+    <string name="tv_submission_time_value">loading..</string>
+    <string name="toast_submission_upload_file_success">Berhasil mengunggah berkas</string>
+    <string name="toast_submission_upload_file_failed">Gagal mengunggah berkas</string>
+    <string name="toast_submission_load_failed">Pengumpulan tidak tersedia atau telah melewati deadline</string>
+    <string name="intent_chooser_submission_upload_file">Pilih berkas untuk diunggah</string>
+    <string name="count_down_days">Hari</string>
+    <string name="count_down_hours">Jam</string>
+    <string name="count_down_minutes">Menit</string>
+    <string name="count_down_seconds">Detik</string>
+
+    <!--   Submission Alert Dialog  -->
+    <string name="dialog_submission_title">Konfirmasi Unggah Berkas</string>
+    <string name="dialog_submission_message_prefix">Apakah anda yakin ingin mengunggah berkas untuk</string>
+    <string name="dialog_submission_message_infix">dengan nama</string>
+    <string name="dialog_submission_message_suffix">\?</string>
+    <string name="dialog_submission_confirm_positive">Ya</string>
+    <string name="dialog_submission_confirm_negative">Tidak</string>
+
 </resources>
