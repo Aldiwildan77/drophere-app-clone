@@ -37,4 +37,13 @@
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="create_page">Create Page</string>
+    <string name="profile">Profile</string>
+    <string name="title_fragment_home">Kelola Halaman</string>
+    <string name="text_find_page_fragmenthome">Temukan halaman pengumpulanmu disini</string>
+    <string name="kumpulkan_file">Kumpulkan File</string>
+
 </resources>
