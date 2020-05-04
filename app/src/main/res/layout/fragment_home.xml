@@ -10,7 +10,7 @@
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="194dp"
+        android:layout_height="220dp"
         style="@style/Card"
         app:cardCornerRadius="15dp">
 
@@ -40,8 +40,9 @@
                 android:textColor="@color/colorText" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_kumpulkan_file"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_height"
                 android:layout_marginStart="@dimen/margin_vertical_extra_small"
                 android:layout_marginTop="@dimen/margin_vertical_medium"
                 android:layout_marginEnd="@dimen/margin_vertical_extra_small"

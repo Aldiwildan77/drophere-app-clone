@@ -45,5 +45,8 @@
     <string name="title_fragment_home">Kelola Halaman</string>
     <string name="text_find_page_fragmenthome">Temukan halaman pengumpulanmu disini</string>
     <string name="kumpulkan_file">Kumpulkan File</string>
+    <string name="title_dialog_home">Kumpulkan file dengan kode unik yang didapat</string>
+    <string name="submit">kumpulkan</string>
+    <string name="masukkan_kode_unik">Masukkan kode unik</string>
 
 </resources>
