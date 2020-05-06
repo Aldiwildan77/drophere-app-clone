@@ -1,11 +1,12 @@
 package com.papbl.drophereclone
 
+import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -13,14 +14,16 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -56,14 +59,17 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
 
     private lateinit var senders: ArrayList<Map<Any, Any>>
     private var senderData: ArrayList<SenderData> = ArrayList()
-    private var fileNames: ArrayList<String> = ArrayList()
 
     private lateinit var ownerId: String
     private lateinit var uniqueCode: String
 
+    private val WRITE_EXT_STORAGE_PERMISSION = 423
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pengumpulan)
+
+        checkStoragePermission()
 
         tvDeadline = findViewById(R.id.tv_deadline)
         tvTitle = findViewById(R.id.tv_card_title)
@@ -78,9 +84,9 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         btnUndugBerkas.setOnClickListener(this)
 
         query = pageCollection
-            .whereEqualTo("owner_id", "21k09ascAC1kL3z2")
+            .whereEqualTo("owner_id", "21k09ascAC1kL3z1")
             .whereEqualTo("unique_code", "51k01ap")
-            .whereEqualTo("is_deleted", false)
+            .whereEqualTo("deleted", false)
             .get()
 
         getPageDetail()
@@ -98,11 +104,47 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                 showActionMenu(v)
             }
             btnUndugBerkas.id -> {
-                val fileDir =
-                    getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + ownerId + "_" + uniqueCode)
+                val folderRoot = File("/storage/emulated/0/Drop Here/")
+                if (!folderRoot.exists()) folderRoot.mkdir()
+                val folderDir = File(folderRoot, ownerId + "_" + uniqueCode)
+                folderDir.mkdir()
                 val folderRef = storageRef.child(ownerId + "_" + uniqueCode)
-                downloadAllFile(fileDir, folderRef)
+                MaterialAlertDialogBuilder(this).apply {
+                    setTitle("Unduh Berkas")
+                    setMessage(
+                        "Apa anda yakin ingin mengunduh berkas pengumpulan ini?"
+                    )
+                    setPositiveButton("Ya") { _, _ ->
+                        downloadAllFile(folderDir, folderRef)
+                    }
+                    setNegativeButton("Tidak") { _, _ -> }
+                }.show()
             }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == WRITE_EXT_STORAGE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                finish()
+            }
+        }
+    }
+
+    private fun checkStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                WRITE_EXT_STORAGE_PERMISSION
+            )
         }
     }
 
@@ -133,7 +175,6 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                     val userId = it.get("user_id").toString()
                     val sender = SenderData(fileName, fullName, submitAt, userId)
                     senderData.add(sender)
-                    fileNames.add(fileName)
                 }
                 rvFileTerkumpul.apply {
                     layoutManager = LinearLayoutManager(context)
@@ -148,13 +189,13 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    fun downloadAllFile(fileDir: File?, folderRef: StorageReference) {
+    fun downloadAllFile(folderDir: File?, folderRef: StorageReference) {
         folderRef.listAll().addOnSuccessListener {
             val total = it.items.size
             var current = 0
             it.items.forEachIndexed { index, fileRef ->
-                val fileName = fileNames.get(index)
-                val file = File(fileDir, fileName)
+                val fileName = senderData[index].fullName + "_" + senderData[index].fileName
+                val file = File(folderDir, fileName)
                 fileRef.getFile(file).addOnSuccessListener {
                     current += 1
                     Toast.makeText(
@@ -183,12 +224,22 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                 Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show()
             }
             R.id.menu_hapus -> {
-                query.addOnSuccessListener {
-                    val documentId = it.documents.get(0).id
-                    pageCollection.document(documentId).update("is_deleted", true)
-                }
-                Toast.makeText(this, "Pengumpulan berhasil dihapus", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
+                MaterialAlertDialogBuilder(this).apply {
+                    setTitle("Hapus Pengumpulan")
+                    setMessage(
+                        "Apa anda yakin ingin menghapus pengumpulan ini?"
+                    )
+                    setPositiveButton("Ya") { _, _ ->
+                        query.addOnSuccessListener {
+                            val documentId = it.documents.get(0).id
+                            pageCollection.document(documentId).update("deleted", true)
+                        }
+                        Toast.makeText(context, "Pengumpulan berhasil dihapus", Toast.LENGTH_SHORT)
+                            .show()
+                        startActivity(Intent(context, MainActivity::class.java))
+                    }
+                    setNegativeButton("Tidak") { _, _ -> }
+                }.show()
             }
         }
         return super.onContextItemSelected(item)

@@ -1,6 +1,5 @@
 package com.papbl.drophereclone
 
-import android.os.Environment
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -83,10 +82,11 @@ class PengumpulanHolder(
     override fun onClick(v: View) {
         val senderName = tvSenderName.text.toString()
         val fileName = tvSenderFileName.text.toString()
-        val fileDir =
-            v.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + ownerId + "_" + uniqueCode)
-        val file = File(fileDir, fileName)
-        Log.d("Cek ", fileRef.toString())
+        val folderRoot = File("/storage/emulated/0/Drop Here/")
+        if (!folderRoot.exists()) folderRoot.mkdir()
+        val folderDir = File(folderRoot, ownerId + "_" + uniqueCode)
+        folderDir.mkdir()
+        val file = File(folderDir, fileName)
         fileRef.getFile(file).addOnSuccessListener {
             val toast = Toast.makeText(
                 v.context,
