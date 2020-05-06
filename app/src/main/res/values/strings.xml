@@ -42,5 +42,9 @@
     <string name="on_boarding_next">lanjut</string>
     <string name="tilte_on_boarding_2">Buat pengumpulanmu semudah berkirim pesan</string>
     <string name="content_on_boarding_2">Santai, dan biarkan kami yang urus untukmu. Hanya 5 menit kalau kamu menunda-nunda proses pembuatannya</string>
+    <string name="profile_title">Halo ini ruang pribadimu</string>
+    <string name="profile_desc">Ubah informasi pribadimu dan sesuaikan akses cloud storage yang yang kamu integrasikan.</string>
+    <string name="h6_informasi_pribadi">Informasi Pribadi</string>
+    <string name="profile_update">simpan perubahan</string>
 
 </resources>
