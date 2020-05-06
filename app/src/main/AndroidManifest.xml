@@ -18,6 +18,11 @@
             android:label="Pengumpulan"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ActionBarTheme" />
+        <activity
+            android:name=".CreatePageActivity"
+            android:label="Buat Halaman"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ActionBarTheme" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -40,7 +40,13 @@
     <!--  Action Pengumpulan -->
     <string name="menu_item_edit">Edit</string>
     <string name="menu_item_delete">Hapus</string>
-
     <string name="file_terkumpul">File Terkumpul</string>
+
+    <!--   Create Page Activity -->
+    <string name="helper_page_empty_title">Judul tidak boleh kosong</string>
+    <string name="helper_page_empty_password">Password tidak boleh kosong</string>
+    <string name="helper_page_empty_deadline">Deadline tidak boleh kosong</string>
+    <string name="helper_page_more_than_deadline">Deadline tidak boleh sebelum atau saat ini</string>
+    <string name="toast_page_something_wrong">Terjadi kesalahan</string>
 
 </resources>
