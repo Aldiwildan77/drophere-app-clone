@@ -15,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ForgotPassword : AppCompatActivity(), View.OnClickListener {
 
     private val mAuth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
 
     private lateinit var emailButtonReset: MaterialButton
     private lateinit var emailEditText: TextInputLayout

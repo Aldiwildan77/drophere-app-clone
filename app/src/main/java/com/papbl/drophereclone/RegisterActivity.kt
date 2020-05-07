@@ -22,6 +22,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var confirmPasswordLayout: TextInputLayout
     private lateinit var registerButton: MaterialButton
+    private lateinit var loginButton: MaterialButton
 
     data class Users(
         val fullname: String,
@@ -31,13 +32,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
         nameLayout = findViewById(R.id.til_register_name)
         emailLayout = findViewById(R.id.til_register_email)
         passwordLayout = findViewById(R.id.til_register_password)
         confirmPasswordLayout = findViewById(R.id.til_register_confirm_password)
         registerButton = findViewById(R.id.btn_register_submit)
+        loginButton = findViewById(R.id.btn_register_account_exist)
 
         registerButton.setOnClickListener(this)
+        loginButton.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -61,6 +65,9 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                         .show()
                 }
             }
+        } else if (v?.id == loginButton.id) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 

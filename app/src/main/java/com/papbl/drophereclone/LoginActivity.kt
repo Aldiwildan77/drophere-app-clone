@@ -3,12 +3,13 @@ package com.papbl.drophereclone
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.papbl.drophereclone.models.Credential
+import com.papbl.drophereclone.utils.UserCredential
 
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -16,10 +17,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private var mAuth: FirebaseAuth? = null
 
     private lateinit var emailLayout: TextInputLayout
-    lateinit var passwordLayout: TextInputLayout
-    lateinit var loginButton: MaterialButton
-    lateinit var registerButton: MaterialButton
-    lateinit var resetPasswordButton: MaterialButton
+    private lateinit var passwordLayout: TextInputLayout
+    private lateinit var loginButton: MaterialButton
+    private lateinit var registerButton: MaterialButton
+    private lateinit var resetPasswordButton: MaterialButton
+
+    private val credential = UserCredential()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        if (mAuth != null) {
+        if (credential.getLoggedUser(this).uid.isNotEmpty()) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -53,25 +56,33 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             loginButton.id -> {
-                mAuth!!.signInWithEmailAndPassword(
-                    emailLayout.editText?.text.toString(), passwordLayout.editText?.text.toString()
-                ).addOnSuccessListener {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }.addOnFailureListener {
-                    Toast.makeText(this, "Email atau Password Salah!!", Toast.LENGTH_SHORT)
-                        .show()
-                }
+
+                val email = emailLayout.editText?.text.toString()
+                val password = passwordLayout.editText?.text.toString()
+
+                mAuth!!.signInWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+
+                        credential.setLoggedUser(
+                            this,
+                            Credential(email, it.user!!.uid)
+                        )
+
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }.addOnFailureListener {
+                        Toast.makeText(this, "Email atau password anda salah!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
             }
             registerButton.id -> {
                 startActivity(Intent(this, RegisterActivity::class.java))
                 finish()
             }
             resetPasswordButton.id -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, ForgotPassword::class.java))
             }
         }
     }
-
 
 }

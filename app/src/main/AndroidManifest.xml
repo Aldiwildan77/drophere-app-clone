@@ -32,8 +32,7 @@
         <activity
             android:name=".ForgotPassword"
             android:label="Lupa Password"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/ActionBarTheme" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
     </application>
 

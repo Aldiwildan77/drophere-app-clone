@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true"
     tools:context=".LoginActivity">
 
@@ -11,20 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_horizontal"
-            android:layout_marginTop="@dimen/margin_vertical_extra_small"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_drop_here"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_login_title"
-            android:layout_width="293dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_horizontal"
             android:layout_marginTop="@dimen/margin_vertical_extra_large"
@@ -35,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_login" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_login_description"
@@ -57,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_horizontal"
-            android:layout_marginTop="@dimen/margin_vertical_extra_large"
+            android:layout_marginTop="120dp"
             android:hint="@string/hint_email"
             app:errorEnabled="true"
             app:hintAnimationEnabled="true"
@@ -69,6 +58,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:imeOptions="actionNext"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,6 +80,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:imeOptions="actionNext"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -101,6 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_vertical_extra_small"
             android:height="@dimen/button_height"
+            android:imeOptions="actionSend"
             android:text="@string/button_login_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +117,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_horizontal"
             android:layout_marginVertical="@dimen/margin_vertical_large"
-            android:height="@dimen/button_height"
             android:text="@string/button_reset_password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
