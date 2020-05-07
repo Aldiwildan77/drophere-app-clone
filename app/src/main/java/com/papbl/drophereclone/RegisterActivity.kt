@@ -88,7 +88,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         val user = Users(fullname, userId)
         userCollection.add(user)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, ManagePageActivity::class.java))
                 finish()
             }
             .addOnFailureListener {

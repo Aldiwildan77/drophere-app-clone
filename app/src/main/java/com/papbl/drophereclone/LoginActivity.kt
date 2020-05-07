@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         if (credential.getLoggedUser(this).uid.isNotEmpty()) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, ManagePageActivity::class.java))
             finish()
         }
 

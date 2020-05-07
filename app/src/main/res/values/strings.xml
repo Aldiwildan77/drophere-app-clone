@@ -51,7 +51,7 @@
     <string name="tv_register_title">Buat Akun Mulai Kumpulkan</string>
 
     <!--  Splash Pages -->
-    <string name="tv_splash_description">Fasilitas unggah file yang terintegrasi dengan cloud storage google drive dan dropbox</string>
+    <string name="tv_splash_description">Fasilitas unggah file yang terintegrasi dengan platform firebase cloud storage</string>
     <string name="tv_splash_group">Powered by Kelompok 4</string>
 
     <!--  Forgot Password Activity -->
@@ -62,5 +62,23 @@
     <string name="toast_reset_password_failed">Email anda belum terdaftar</string>
     <string name="error_reset_password_email_is_empty">Email tidak boleh kosong</string>
     <string name="error_reset_password_email_not_valid">Email anda tidak valid, cth: GilangNur29@gmail.com</string>
+
+    <!--  Home Fragment  -->
+    <string name="tv_home_title">Kelola Halaman</string>
+    <string name="tv_home_description">Temukan halaman pengumpulanmu disini</string>
+
+    <!--  Home Fragment Dialog  -->
+    <string name="dialog_submit_unique_code_title">Kumpulkan file dengan kode unik yang didapat</string>
+    <string name="dialog_submit_password_title">Masukkan password halaman Pengumpulan</string>
+
+    <string name="til_dialog_submit_password_label">Password</string>
+    <string name="til_dialog_submit_unique_code_label">Unique Code</string>
+
+    <string name="error_dialog_submit_unavailable_unique_code">Unique Code Tidak Ada</string>
+    <string name="error_dialog_submit_password_is_wrong">Password Salah</string>
+
+    <!--  Menu Item Pages  -->
+    <string name="menu_item_page_edit">Ubah</string>
+    <string name="menu_item_page_delete">Hapus</string>
 
 </resources>
