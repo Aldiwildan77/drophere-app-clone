@@ -12,6 +12,7 @@
     <string name="button_login_account">Masuk</string>
     <string name="button_register_account">Buat Akun Baru</string>
     <string name="button_reset_password">Reset Password</string>
+    <string name="button_already_had_account">Sudah punya akun</string>
 
     <string name="dialog_submit">Kumpulkan</string>
 
@@ -37,8 +38,20 @@
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
 
-    <string name="email">Email</string>
-    <string name="password">Password</string>
+    <!--  Register and Login Hint -->
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Nama</string>
 
+    <!--  Login Pages  -->
+    <string name="tv_login_title">Kumpulkan Filemu Disini</string>
+    <string name="tv_login_description">Mudahkanmu menerima dan mengumpulkan file, buat pengumpulan private, serta tentukan batasannya dengan mudah.</string>
+
+    <!--  Register Pages -->
+    <string name="tv_register_title">Buat Akun Mulai Kumpulkan</string>
+
+    <!--  Splash Pages -->
+    <string name="tv_splash_description">Fasilitas unggah file yang terintegrasi dengan cloud storage google drive dan dropbox</string>
+    <string name="tv_splash_group">Powered by Kelompok 4</string>
 
 </resources>

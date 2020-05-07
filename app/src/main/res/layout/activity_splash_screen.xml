@@ -7,11 +7,12 @@
     tools:context=".SplashScreen">
 
     <ImageView
-        android:id="@+id/splashscreenlogo"
+        android:id="@+id/iv_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_vertical_medium"
         android:layout_marginTop="200dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_drop_here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -19,22 +20,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="264dp"
-        android:layout_height="61dp"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_vertical_medium"
-        android:layout_marginTop="8dp"
-        android:text="Fasilitas unggah file yang terintegrasi dengan cloud storage google drive dan dropbox"
+        android:layout_marginTop="@dimen/margin_vertical_extra_small"
+        android:text="@string/tv_splash_description"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splashscreenlogo" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_splash" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_vertical_large"
-        android:text="Powered by Kelompok Eka dan 4 bidadari"
+        android:text="@string/tv_splash_group"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
