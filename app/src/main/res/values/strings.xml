@@ -37,4 +37,8 @@
     <string name="menu_item_user">Profil</string>
     <string name="menu_item_add">Tambah</string>
 
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+
 </resources>
