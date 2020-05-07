@@ -48,5 +48,14 @@
     <string name="title_dialog_home">Kumpulkan file dengan kode unik yang didapat</string>
     <string name="submit">kumpulkan</string>
     <string name="masukkan_kode_unik">Masukkan kode unik</string>
+    <string name="masukkan_password">Masukkan Password</string>
+    <string name="wrong_password">Password Salah</string>
+    <string name="unavailable_unique_code">Unique Code Tidak Ada</string>
+    <string name="no_due_date">NO DUE DATE</string>
+    <string name="ubah">Ubah</string>
+    <string name="hapus">Hapus</string>
+    <string name="kode_unik_value">kode unik value</string>
+    <string name="wrong_unique_code">Unique Code Salah</string>
+    <string name="input_password_text">Masukkan password halaman Pengumpulan</string>
 
 </resources>
