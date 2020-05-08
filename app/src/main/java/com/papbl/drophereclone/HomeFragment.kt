@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
-import com.papbl.drophereclone.models.Credential
 import com.papbl.drophereclone.models.ItemPage
 import com.papbl.drophereclone.utils.UserCredential
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -126,7 +125,7 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { result ->
                 val listPage: ArrayList<ItemPage> = arrayListOf()
                 for (document in result) {
-                    if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid.toString()) {
+                    if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid) {
                         listPage.add(
                             ItemPage(
                                 document.getTimestamp("deadline"),

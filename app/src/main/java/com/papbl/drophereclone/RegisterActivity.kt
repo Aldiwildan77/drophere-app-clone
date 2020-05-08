@@ -46,11 +46,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        if (mAuth != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-
         mAuth = FirebaseAuth.getInstance()
     }
 
@@ -88,7 +83,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         val user = Users(fullname, userId)
         userCollection.add(user)
             .addOnSuccessListener {
-                startActivity(Intent(this, ManagePageActivity::class.java))
+                startActivity(Intent(this, OnBoardingActivity::class.java))
                 finish()
             }
             .addOnFailureListener {

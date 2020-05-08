@@ -10,7 +10,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.papbl.drophereclone.models.ItemPage
-import kotlinx.android.synthetic.main.item_page.view.*
+import kotlinx.android.synthetic.main.component_card_pages.view.*
 import java.util.*
 
 class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
@@ -61,7 +61,7 @@ class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
         parent: ViewGroup,
         viewType: Int
     ): ManageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_page, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.component_card_pages, parent, false)
         return ManageViewHolder(view)
     }
 

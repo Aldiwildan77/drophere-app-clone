@@ -36,6 +36,7 @@
             android:name=".ManagePageActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".OnBoardingActivity" />
     </application>
 
 </manifest>

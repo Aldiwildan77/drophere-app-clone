@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         if (credential.getLoggedUser(this).uid.isNotEmpty()) {
-            startActivity(Intent(this, ManagePageActivity::class.java))
+            startActivity(Intent(this, OnBoardingActivity::class.java))
             finish()
         }
 
@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             Credential(email, it.user!!.uid)
                         )
 
-                        startActivity(Intent(this, MainActivity::class.java))
+                        startActivity(Intent(this, OnBoardingActivity::class.java))
                         finish()
                     }.addOnFailureListener {
                         Toast.makeText(this, "Email atau password anda salah!", Toast.LENGTH_SHORT)

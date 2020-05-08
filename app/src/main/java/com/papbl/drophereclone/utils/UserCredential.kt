@@ -9,6 +9,7 @@ class UserCredential {
     companion object {
         const val KEY_UID_CREDENTIAL = "uid"
         const val KEY_EMAIL_CREDENTIAL = "email"
+        const val KEY_ON_BOARDING_VIEWED = "onboarding"
     }
 
     private fun getSharedPreference(context: Context): SharedPreferences? {
@@ -16,6 +17,16 @@ class UserCredential {
             context.applicationInfo.toString(),
             Context.MODE_PRIVATE
         )
+    }
+
+    fun setOnBoardingViewed(context: Context) {
+        val editor: SharedPreferences.Editor = getSharedPreference(context)!!.edit()
+        editor.putBoolean(KEY_ON_BOARDING_VIEWED, true)
+        editor.apply()
+    }
+
+    fun getOnBoardingViewed(context: Context): Boolean {
+        return getSharedPreference(context)!!.getBoolean(KEY_ON_BOARDING_VIEWED, false)
     }
 
     fun setLoggedUser(context: Context, userCredential: Credential) {

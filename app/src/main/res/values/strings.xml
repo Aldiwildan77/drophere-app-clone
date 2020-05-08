@@ -10,6 +10,7 @@
     <string name="button_create_page">Buat Halaman</string>
     <string name="button_edit_changes">Simpan Perubahan</string>
     <string name="button_login_account">Masuk</string>
+    <string name="button_logout_account">Keluar</string>
     <string name="button_register_account">Buat Akun Baru</string>
     <string name="button_reset_password">Reset Password</string>
     <string name="button_already_had_account">Sudah punya akun</string>
@@ -80,5 +81,24 @@
     <!--  Menu Item Pages  -->
     <string name="menu_item_page_edit">Ubah</string>
     <string name="menu_item_page_delete">Hapus</string>
+
+    <!--  OnBoarding Pages  -->
+    <string name="on_boarding_1_title">Waktu sisanya bisa kamu pakai untuk jalan-jalan</string>
+    <string name="on_boarding_1_content">Pantau pengumpulannya, dalam genggamanmu. Beri tanda dan pelajaran untuk yang tidak tepat waktu dalam pengumpulan.</string>
+    <string name="on_boarding_skip">lewati</string>
+    <string name="on_boarding_next">lanjut</string>
+    <string name="on_boarding_2_title">Buat pengumpulanmu semudah berkirim pesan</string>
+    <string name="on_boarding_2_content">Santai, dan biarkan kami yang urus untukmu. Hanya 5 menit kalau kamu menunda-nunda proses pembuatannya</string>
+
+    <!--  Profile Fragment  -->
+    <string name="tv_profile_title">Halo ini ruang pribadimu</string>
+    <string name="tv_profile_description">Ubah informasi pribadimu dan sesuaikan akses cloud storage yang kamu integrasikan.</string>
+    <string name="tv_profile_content_1_title">Informasi Pribadi</string>
+    <string name="tv_profile_content_2_title">Ubah Kata Sandi</string>
+    <string name="til_profile_new_confirm_password">Konfirmasi Password</string>
+    <string name="til_profile_new_password">Password Baru</string>
+    <string name="til_profile_current_password">Password Saat Ini</string>
+    <string name="til_profile_email">Alamat Email</string>
+    <string name="til_profile_name">Nama</string>
 
 </resources>

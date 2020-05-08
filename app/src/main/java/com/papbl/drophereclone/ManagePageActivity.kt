@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.papbl.drophereclone.utils.UserCredential
 
 class ManagePageActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -15,6 +16,8 @@ class ManagePageActivity : AppCompatActivity(),
     }
 
     private var active: Fragment = homeFragment
+
+    private val credential = UserCredential()
     private val mFragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,11 @@ class ManagePageActivity : AppCompatActivity(),
             .commit()
 
         navView.setOnNavigationItemSelectedListener(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        credential.setOnBoardingViewed(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 class ForgotPassword : AppCompatActivity(), View.OnClickListener {
@@ -71,7 +70,7 @@ class ForgotPassword : AppCompatActivity(), View.OnClickListener {
 
     private fun forgotPassword(email: String = "") {
         mAuth.sendPasswordResetEmail(email)
-            .addOnSuccessListener { _ ->
+            .addOnSuccessListener {
                 Toast.makeText(
                     this,
                     resources.getString(R.string.toast_reset_password_success),
@@ -79,7 +78,7 @@ class ForgotPassword : AppCompatActivity(), View.OnClickListener {
                 ).show()
                 finish()
             }
-            .addOnFailureListener { ex ->
+            .addOnFailureListener {
                 Toast.makeText(
                     this,
                     resources.getString(R.string.toast_reset_password_failed),
