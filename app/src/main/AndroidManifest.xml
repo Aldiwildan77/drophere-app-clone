@@ -34,6 +34,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ManagePageActivity"
+            android:label="Drophere Clone"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SubmissionActivity"
+            android:label="Pengumpulan Tugas"
+            android:parentActivityName=".ManagePageActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
         <activity android:name=".OnBoardingActivity" />

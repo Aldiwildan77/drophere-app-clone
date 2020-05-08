@@ -9,6 +9,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.papbl.drophereclone.models.Credential
+import com.papbl.drophereclone.models.User
+import com.papbl.drophereclone.utils.UserCredential
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -17,23 +20,20 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private val db = FirebaseFirestore.getInstance()
     private val userCollection = db.collection("users")
 
-    private lateinit var nameLayout: TextInputLayout
+    private val credential = UserCredential()
+
+    private lateinit var fullnameLayout: TextInputLayout
     private lateinit var emailLayout: TextInputLayout
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var confirmPasswordLayout: TextInputLayout
     private lateinit var registerButton: MaterialButton
     private lateinit var loginButton: MaterialButton
 
-    data class Users(
-        val fullname: String,
-        val user_id: String
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        nameLayout = findViewById(R.id.til_register_name)
+        fullnameLayout = findViewById(R.id.til_register_name)
         emailLayout = findViewById(R.id.til_register_email)
         passwordLayout = findViewById(R.id.til_register_password)
         confirmPasswordLayout = findViewById(R.id.til_register_confirm_password)
@@ -51,13 +51,22 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v?.id == registerButton.id) {
+
+            if (fullnameLayout.editText?.text.isNullOrEmpty() ||
+                emailLayout.editText?.text.isNullOrEmpty() ||
+                passwordLayout.editText?.text.isNullOrEmpty() ||
+                confirmPasswordLayout.editText?.text.isNullOrEmpty()
+            ) {
+                toastMessage(resources.getString(R.string.toast_login_register_is_empty))
+                return
+            }
+
             registerNewUser { isSuccess ->
                 if (isSuccess) {
-                    val fullname = nameLayout.editText?.text.toString()
+                    val fullname = fullnameLayout.editText?.text.toString()
                     storeNewUserData(fullname, mAuth!!.uid!!)
                 } else {
-                    Toast.makeText(this, "Gagal untuk mendaftarkan akun", Toast.LENGTH_SHORT)
-                        .show()
+                    toastMessage(resources.getString(R.string.error_register_failed))
                 }
             }
         } else if (v?.id == loginButton.id) {
@@ -80,15 +89,31 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun storeNewUserData(fullname: String, userId: String) {
-        val user = Users(fullname, userId)
+        val user = User(fullname, userId)
         userCollection.add(user)
             .addOnSuccessListener {
+                credential.setLoggedUser(
+                    this,
+                    Credential(
+                        emailLayout.editText?.text.toString(),
+                        userId,
+                        fullname
+                    )
+                )
                 startActivity(Intent(this, OnBoardingActivity::class.java))
                 finish()
             }
             .addOnFailureListener {
                 mAuth?.currentUser?.delete()
             }
+    }
+
+    private fun toastMessage(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
 }

@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ItemPage(
+    var doc_id: String?,
     var deadline: Timestamp?,
     var deleted: Boolean,
     var description: String?,

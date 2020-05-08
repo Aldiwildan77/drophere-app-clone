@@ -9,6 +9,7 @@ class UserCredential {
     companion object {
         const val KEY_UID_CREDENTIAL = "uid"
         const val KEY_EMAIL_CREDENTIAL = "email"
+        const val KEY_FULLNAME_CREDENTIAL = "fullname"
         const val KEY_ON_BOARDING_VIEWED = "onboarding"
     }
 
@@ -33,20 +34,31 @@ class UserCredential {
         val editor: SharedPreferences.Editor = getSharedPreference(context)!!.edit()
         editor.putString(KEY_EMAIL_CREDENTIAL, userCredential.email)
         editor.putString(KEY_UID_CREDENTIAL, userCredential.uid)
+        editor.putString(KEY_FULLNAME_CREDENTIAL, userCredential.fullname)
         editor.apply()
     }
 
     fun getLoggedUser(context: Context): Credential {
         val email = getSharedPreference(context)!!.getString(KEY_EMAIL_CREDENTIAL, "")
         val uid = getSharedPreference(context)!!.getString(KEY_UID_CREDENTIAL, "")
-        return Credential(email!!, uid!!)
+        val fullname = getSharedPreference(context)!!.getString(KEY_FULLNAME_CREDENTIAL, "")
+        return Credential(email!!, uid!!, fullname!!)
     }
 
-    fun clearLoggedInUser(context: Context) {
+    fun updateLoggedUser(context: Context, userCredential: Credential) {
+        val editor: SharedPreferences.Editor = getSharedPreference(context)!!.edit()
+        editor.putString(KEY_EMAIL_CREDENTIAL, userCredential.email)
+        editor.putString(KEY_FULLNAME_CREDENTIAL, userCredential.fullname)
+        editor.apply()
+    }
+
+    fun clearLoggedInUser(context: Context): Boolean {
         val editor: SharedPreferences.Editor = getSharedPreference(context)!!.edit()
         editor.remove(KEY_UID_CREDENTIAL)
         editor.remove(KEY_EMAIL_CREDENTIAL)
-        editor.apply()
+        editor.remove(KEY_FULLNAME_CREDENTIAL)
+        editor.clear()
+        return editor.commit()
     }
 
 }

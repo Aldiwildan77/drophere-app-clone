@@ -48,6 +48,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listPage.clear()
+    }
+
     private fun findPage(uniqueCode: String) {
         pageCollection
             .get()
@@ -55,6 +60,7 @@ class HomeFragment : Fragment() {
                 for (document in result) {
                     if (document.getString("unique_code") == uniqueCode) {
                         val page = ItemPage(
+                            document.id,
                             document.getTimestamp("deadline"),
                             document.getBoolean("deleted")!!,
                             document.getString("description"),
@@ -67,7 +73,7 @@ class HomeFragment : Fragment() {
                             inputPasswordCheckDialog(page)
                             return@addOnSuccessListener
                         } else {
-                            val intentTest = Intent(activity, MainActivity::class.java)
+                            val intentTest = Intent(activity, SubmissionActivity::class.java)
                             intentTest.putExtra("extra_page", page)
                             startActivity(intentTest)
                             return@addOnSuccessListener
@@ -92,16 +98,15 @@ class HomeFragment : Fragment() {
             .setPositiveButton(resources.getString(R.string.dialog_submit)) { _, _ ->
                 val textInputPassword = textPassword.text.toString()
                 if (textInputPassword == page.password) {
-                    val intentTest = Intent(activity, MainActivity::class.java)
-                    intentTest.putExtra("extra_page", page)
-                    startActivity(intentTest)
+                    val intent = Intent(activity, SubmissionActivity::class.java)
+                    intent.putExtra("extra_page", page)
+                    startActivity(intent)
                 } else {
                     Toast.makeText(
                         context,
                         resources.getString(R.string.error_dialog_submit_password_is_wrong),
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                 }
             }
             .setView(dialogView)
@@ -128,6 +133,7 @@ class HomeFragment : Fragment() {
                     if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid) {
                         listPage.add(
                             ItemPage(
+                                document.id,
                                 document.getTimestamp("deadline"),
                                 document.getBoolean("deleted")!!,
                                 document.getString("description"),

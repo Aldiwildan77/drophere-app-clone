@@ -25,7 +25,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_profile_title"
-            android:layout_width="270dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10.7dp"
             android:text="@string/tv_profile_title"
@@ -36,8 +36,9 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_profile_description"
-            android:layout_width="260dp"
-            android:layout_height="55dp"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_vertical_extra_small"
             android:text="@string/tv_profile_description"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +129,6 @@
                 android:layout_height="match_parent"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:maxLength="8"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -149,7 +149,6 @@
                 android:layout_height="match_parent"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:maxLength="8"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -170,7 +169,6 @@
                 android:layout_height="match_parent"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:maxLength="8"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -182,6 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_vertical_small"
             android:height="@dimen/button_height"
+            android:enabled="false"
             android:imeOptions="actionSend"
             android:text="@string/button_edit_changes"
             app:layout_constraintEnd_toEndOf="parent"

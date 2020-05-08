@@ -5,12 +5,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorError">@color/colorError</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="backgroundColor">@color/colorAppBackground</item>
     </style>
 
     <style name="ActionBarTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="ChipTheme" parent="Widget.MaterialComponents.Chip.Choice">
@@ -46,5 +48,7 @@
         <item name="cardBackgroundColor">@color/colorAppBackground</item>
         <item name="cardForegroundColor">@android:color/transparent</item>
     </style>
+
+    <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog"/>
 
 </resources>
