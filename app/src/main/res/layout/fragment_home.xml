@@ -11,7 +11,7 @@
     <com.google.android.material.card.MaterialCardView
         style="@style/Card"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout

@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.papbl.drophereclone.utils.UserCredential
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,7 +44,7 @@ data class SenderData(
 
 class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     PopupMenu.OnMenuItemClickListener {
-    //    private val mAuth = FirebaseAuth.getInstance()
+    private val credential = UserCredential()
     private val db = FirebaseFirestore.getInstance()
     private val pageCollection = db.collection("pages")
     private val storageRef = Firebase.storage.reference
@@ -57,9 +58,12 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var btnUndugBerkas: MaterialButton
     private lateinit var rvFileTerkumpul: RecyclerView
 
-    private lateinit var senders: ArrayList<Map<Any, Any>>
+    private lateinit var senders: ArrayList<Map<Any?, Any?>>
     private var senderData: ArrayList<SenderData> = ArrayList()
 
+    private val KEY_EXTRA_UNIQUE_CODE: String = "unique_code"
+    private lateinit var filterUniqueCode: String
+    private lateinit var filterOwnerId: String
     private lateinit var ownerId: String
     private lateinit var uniqueCode: String
 
@@ -68,6 +72,9 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pengumpulan)
+
+        filterUniqueCode = intent.extras?.get(KEY_EXTRA_UNIQUE_CODE) as String
+        filterOwnerId = credential.getLoggedUser(this).uid
 
         checkStoragePermission()
 
@@ -84,8 +91,8 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         btnUndugBerkas.setOnClickListener(this)
 
         query = pageCollection
-            .whereEqualTo("owner_id", "21k09ascAC1kL3z1")
-            .whereEqualTo("unique_code", "51k01ap")
+            .whereEqualTo("ownerId", filterOwnerId)
+            .whereEqualTo("unique_code", filterUniqueCode)
             .whereEqualTo("deleted", false)
             .get()
 
@@ -96,9 +103,9 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         when (v!!.id) {
             ibUniqueCode.id -> {
                 val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip: ClipData = ClipData.newPlainText("Cek", tvUniqueCode.text)
+                val clip: ClipData = ClipData.newPlainText("Kode Unik", tvUniqueCode.text)
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(this, "Kode unik berhasil disalin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Kode unik berhasil disalin!", Toast.LENGTH_SHORT).show()
             }
             ibPopupAction.id -> {
                 showActionMenu(v)
@@ -109,16 +116,21 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                 val folderDir = File(folderRoot, ownerId + "_" + uniqueCode)
                 folderDir.mkdir()
                 val folderRef = storageRef.child(ownerId + "_" + uniqueCode)
-                MaterialAlertDialogBuilder(this).apply {
-                    setTitle("Unduh Berkas")
-                    setMessage(
-                        "Apa anda yakin ingin mengunduh berkas pengumpulan ini?"
-                    )
-                    setPositiveButton("Ya") { _, _ ->
-                        downloadAllFile(folderDir, folderRef)
-                    }
-                    setNegativeButton("Tidak") { _, _ -> }
-                }.show()
+                if (rvFileTerkumpul.adapter?.itemCount != 0) {
+                    MaterialAlertDialogBuilder(this).apply {
+                        setTitle("Unduh Berkas")
+                        setMessage(
+                            "Apa anda yakin ingin mengunduh berkas pengumpulan ini?"
+                        )
+                        setPositiveButton("Ya") { _, _ ->
+                            downloadAllFile(folderDir, folderRef)
+                        }
+                        setNegativeButton("Tidak") { _, _ -> }
+                    }.show()
+                } else {
+                    Toast.makeText(this, "Belum ada yang mengumpulkan tugas", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }
@@ -148,33 +160,33 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    fun getPageDetail() {
+    private fun getPageDetail() {
         query.addOnSuccessListener { documents ->
             for (document in documents) {
-                val deadline: Timestamp = document.data.get("deadline") as Timestamp
+                val deadline: Timestamp = document.data["deadline"] as Timestamp
                 val simpleDateFormat =
                     SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
-                simpleDateFormat.setTimeZone(TimeZone.getDefault())
-                ownerId = document.data.get("owner_id").toString()
-                uniqueCode = document.data.get("unique_code").toString()
-                tvDeadline.setText(simpleDateFormat.format(deadline.toDate()))
-                tvTitle.setText(document.data.get("title").toString())
-                tvUniqueCode.setText(uniqueCode)
-                senders = document.data.get("senders") as ArrayList<Map<Any, Any>>
-                Collections.sort(senders, object : Comparator<Map<Any, Any>> {
-                    override fun compare(obj1: Map<Any, Any>, obj2: Map<Any, Any>): Int {
-                        val data1 = obj1.get("submit_at") as Timestamp
-                        val data2 = obj2.get("submit_at") as Timestamp
-                        return data2.compareTo(data1)
+                simpleDateFormat.timeZone = TimeZone.getDefault()
+                ownerId = document.data["ownerId"].toString()
+                uniqueCode = document.data["unique_code"].toString()
+                tvDeadline.text = simpleDateFormat.format(deadline.toDate())
+                tvTitle.text = document.data["title"].toString()
+                tvUniqueCode.text = (uniqueCode)
+                if (document.data["senders"] != null) {
+                    senders = document.data["senders"] as ArrayList<Map<Any?, Any?>>
+                    senders.sortWith(Comparator { o1, o2 ->
+                        val data1 = o1?.get("submit_at") as Timestamp
+                        val data2 = o2?.get("submit_at") as Timestamp
+                        data2.compareTo(data1)
+                    })
+                    senders.forEach {
+                        val fileName = it["file"].toString()
+                        val fullName = it["fullname"].toString()
+                        val submitAt = it["submit_at"] as Timestamp
+                        val userId = it["user_id"].toString()
+                        val sender = SenderData(fileName, fullName, submitAt, userId)
+                        senderData.add(sender)
                     }
-                })
-                senders.forEach {
-                    val fileName = it.get("file").toString()
-                    val fullName = it.get("fullname").toString()
-                    val submitAt = it.get("submit_at") as Timestamp
-                    val userId = it.get("user_id").toString()
-                    val sender = SenderData(fileName, fullName, submitAt, userId)
-                    senderData.add(sender)
                 }
                 rvFileTerkumpul.apply {
                     layoutManager = LinearLayoutManager(context)
@@ -189,7 +201,7 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    fun downloadAllFile(folderDir: File?, folderRef: StorageReference) {
+    private fun downloadAllFile(folderDir: File?, folderRef: StorageReference) {
         folderRef.listAll().addOnSuccessListener {
             val total = it.items.size
             var current = 0
@@ -203,14 +215,14 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         "Berhasil mengunduh file (${current}/${total})",
                         Toast.LENGTH_SHORT
                     ).show()
-                }.addOnFailureListener {
-                    Log.e("PengumpulanActivity", it.message.toString())
+                }.addOnFailureListener { error ->
+                    Log.e("PengumpulanActivity", error.message.toString())
                 }
             }
         }
     }
 
-    fun showActionMenu(v: View) {
+    private fun showActionMenu(v: View) {
         PopupMenu(this, v).apply {
             inflate(R.menu.menu_action_pengumpulan)
             setOnMenuItemClickListener { item -> onMenuItemClick(item) }
@@ -231,12 +243,12 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                     )
                     setPositiveButton("Ya") { _, _ ->
                         query.addOnSuccessListener {
-                            val documentId = it.documents.get(0).id
+                            val documentId = it.documents[0].id
                             pageCollection.document(documentId).update("deleted", true)
                         }
                         Toast.makeText(context, "Pengumpulan berhasil dihapus", Toast.LENGTH_SHORT)
                             .show()
-                        startActivity(Intent(context, MainActivity::class.java))
+                        finish()
                     }
                     setNegativeButton("Tidak") { _, _ -> }
                 }.show()

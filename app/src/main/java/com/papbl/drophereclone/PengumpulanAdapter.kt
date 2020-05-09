@@ -20,10 +20,10 @@ import java.util.*
 
 
 class PengumpulanAdapter(
-    val items: ArrayList<SenderData>,
-    val deadline: String,
-    val ownerId: String,
-    val uniqueCode: String
+    private val items: ArrayList<SenderData>,
+    private val deadline: String,
+    private val ownerId: String,
+    private val uniqueCode: String
 ) :
     RecyclerView.Adapter<PengumpulanHolder>() {
 
@@ -45,9 +45,9 @@ class PengumpulanAdapter(
 
 class PengumpulanHolder(
     v: View,
-    val deadline: String,
-    val ownerId: String,
-    val uniqueCode: String
+    private val deadline: String,
+    private val ownerId: String,
+    private val uniqueCode: String
 ) :
     RecyclerView.ViewHolder(v), View.OnClickListener {
     private val storageRef = Firebase.storage.reference
@@ -65,7 +65,7 @@ class PengumpulanHolder(
     fun bind(senderData: SenderData) {
         fileRef = storageRef.child(ownerId + "_" + uniqueCode + "/" + senderData.fileName)
         val dateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
-        dateFormat.setTimeZone(TimeZone.getDefault())
+        dateFormat.timeZone = TimeZone.getDefault()
         val deadlineDate = dateFormat.parse(deadline)
         val submitDate = senderData.submitAt.toDate()
         if (submitDate > deadlineDate) {
@@ -90,14 +90,14 @@ class PengumpulanHolder(
         fileRef.getFile(file).addOnSuccessListener {
             val toast = Toast.makeText(
                 v.context,
-                "Berhasil mengunduh file milik ${senderName}",
+                "Berhasil mengunduh file milik $senderName",
                 Toast.LENGTH_SHORT
             )
             val layout = toast.view as LinearLayout
             val text = layout.getChildAt(0) as TextView
             text.gravity = Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
             toast.show()
-        }.addOnFailureListener() {
+        }.addOnFailureListener {
             Log.e("PengumpulanAdapter", it.message.toString())
         }
     }

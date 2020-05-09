@@ -148,5 +148,4 @@ class HomeFragment : Fragment() {
                 callback.invoke(listPage)
             }
     }
-
 }

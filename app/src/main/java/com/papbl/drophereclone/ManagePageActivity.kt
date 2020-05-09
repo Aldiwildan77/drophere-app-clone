@@ -1,5 +1,6 @@
 package com.papbl.drophereclone
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +51,9 @@ class ManagePageActivity : AppCompatActivity(),
                     .commit()
                 active = homeFragment
                 return true
+            }
+            R.id.menu_item_add -> {
+                startActivity(Intent(this, CreatePageActivity::class.java))
             }
             R.id.menu_item_user -> {
                 mFragmentManager.beginTransaction()

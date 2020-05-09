@@ -3,6 +3,7 @@ package com.papbl.drophereclone
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.papbl.drophereclone.models.ItemPage
 import kotlinx.android.synthetic.main.component_card_pages.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
@@ -22,17 +24,25 @@ class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
                 if (itemPage.deadline == null) {
                     tv_deadline.text = context.getString(R.string.card_pages_tv_no_due_date)
                 } else {
+                    val simpleDateFormat =
+                        SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
+                    simpleDateFormat.timeZone = TimeZone.getDefault()
                     val deadline = itemPage.deadline!!.toDate()
-                    tv_deadline.text = deadline.toString()
+                    tv_deadline.text = simpleDateFormat.format(deadline)
                 }
                 tv_card_title.text = itemPage.title
                 tv_unique_code_value.text = itemPage.unique_code
+                card_page.setOnClickListener {
+                    val intent = Intent(context, PengumpulanActivity::class.java)
+                    intent.putExtra("unique_code", tv_unique_code_value?.text)
+                    context.startActivity(intent)
+                }
                 ib_unique_code_copy.setOnClickListener {
                     val clipboard =
                         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText("Unique Code", tv_unique_code_value.text)
+                    val clip = ClipData.newPlainText("Kode Unik", tv_unique_code_value.text)
                     clipboard.setPrimaryClip(clip)
-                    Toast.makeText(context, "Unique Code Copied!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Kode unik berhasil disalin!", Toast.LENGTH_SHORT).show()
                 }
                 ib_more_popup.setOnClickListener {
                     PopupMenu(context, ib_more_popup).apply {

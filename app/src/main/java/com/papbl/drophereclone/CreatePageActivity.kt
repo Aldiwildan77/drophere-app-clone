@@ -19,6 +19,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.papbl.drophereclone.utils.UserCredential
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import java.text.SimpleDateFormat
@@ -29,6 +30,7 @@ class CreatePageActivity : AppCompatActivity(), View.OnClickListener,
     CompoundButton.OnCheckedChangeListener, TimePickerDialog.OnTimeSetListener,
     DatePickerDialog.OnDateSetListener {
 
+    private val credential = UserCredential()
     private val db = FirebaseFirestore.getInstance()
     private val pageCollection = db.collection("pages")
 
@@ -71,7 +73,7 @@ class CreatePageActivity : AppCompatActivity(), View.OnClickListener,
         if (v?.id == pageSubmit.id && isTitleValid) {
             val createPagesData = Pages(
                 generateUniqueCode(),
-                "fJMfIoDQnYaXHdzVHERnG3yIh7z1",
+                credential.getLoggedUser(this).uid,
                 pageTitle.editText?.text.toString(),
                 pageDescription.editText?.text.toString()
             )
