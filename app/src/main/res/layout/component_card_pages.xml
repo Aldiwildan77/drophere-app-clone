@@ -5,7 +5,8 @@
     style="@style/Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_vertical_extra_small">
+    android:layout_marginHorizontal="@dimen/margin_vertical_extra_small"
+    android:layout_marginTop="@dimen/margin_vertical_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

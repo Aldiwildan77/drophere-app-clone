@@ -10,8 +10,10 @@
     <string name="button_create_page">Buat Halaman</string>
     <string name="button_edit_changes">Simpan Perubahan</string>
     <string name="button_login_account">Masuk</string>
+    <string name="button_logout_account">Keluar</string>
     <string name="button_register_account">Buat Akun Baru</string>
     <string name="button_reset_password">Reset Password</string>
+    <string name="button_already_had_account">Sudah punya akun</string>
 
     <string name="dialog_submit">Kumpulkan</string>
 
@@ -48,5 +50,104 @@
     <string name="helper_page_empty_deadline">Deadline tidak boleh kosong</string>
     <string name="helper_page_more_than_deadline">Deadline tidak boleh sebelum atau saat ini</string>
     <string name="toast_page_something_wrong">Terjadi kesalahan</string>
+
+    <!--  Register and Login Hint -->
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Nama</string>
+
+    <!--  Login Pages  -->
+    <string name="tv_login_title">Kumpulkan Filemu Disini</string>
+    <string name="tv_login_description">Mudahkanmu menerima dan mengumpulkan file, buat pengumpulan private, serta tentukan batasannya dengan mudah.</string>
+    <string name="error_login_auth_is_wrong">Terjadi kesalahan otentikasi</string>
+    <string name="error_login_auth_is_not_valid">Email atau password anda salah</string>
+    <string name="toast_login_auth_is_empty">field tidak boleh kosong</string>
+
+    <!--  Register Pages -->
+    <string name="tv_register_title">Buat Akun Mulai Kumpulkan</string>
+    <string name="error_register_failed">Gagal untuk mendaftarkan akun</string>
+    <string name="toast_login_register_is_empty">field tidak boleh kosong</string>
+
+    <!--  Splash Pages -->
+    <string name="tv_splash_description">Fasilitas unggah file yang terintegrasi dengan platform firebase cloud storage</string>
+    <string name="tv_splash_group">Powered by Kelompok 4</string>
+
+    <!--  Forgot Password Activity -->
+    <string name="tv_reset_password_detail">Berikan emailmu yang terdaftar, dan kami akan urus sisanya. Jangan lupa cek kontak masuk untuk link reset password.</string>
+    <string name="tv_reset_password_title">Jangan Panik</string>
+    <string name="til_reset_password_label">Email</string>
+    <string name="toast_reset_password_success">Email reset password berhasil dikirim</string>
+    <string name="toast_reset_password_failed">Email anda belum terdaftar</string>
+    <string name="error_reset_password_email_is_empty">Email tidak boleh kosong</string>
+    <string name="error_reset_password_email_not_valid">Email anda tidak valid, cth: GilangNur29@gmail.com</string>
+
+    <!--  Home Fragment  -->
+    <string name="tv_home_title">Kelola Halaman</string>
+    <string name="tv_home_description">Temukan halaman pengumpulanmu disini</string>
+
+    <!--  Home Fragment Dialog  -->
+    <string name="dialog_submit_unique_code_title">Kumpulkan file dengan kode unik yang didapat</string>
+    <string name="dialog_submit_password_title">Masukkan password halaman Pengumpulan</string>
+
+    <string name="til_dialog_submit_password_label">Password</string>
+    <string name="til_dialog_submit_unique_code_label">Unique Code</string>
+
+    <string name="error_dialog_submit_unavailable_unique_code">Pengumpulan Tidak Ada</string>
+    <string name="error_dialog_submit_password_is_wrong">Password Salah</string>
+
+    <!--  Menu Item Pages  -->
+    <string name="menu_item_page_edit">Ubah</string>
+    <string name="menu_item_page_delete">Hapus</string>
+
+    <!--  OnBoarding Pages  -->
+    <string name="on_boarding_1_title">Waktu sisanya bisa kamu pakai untuk jalan-jalan</string>
+    <string name="on_boarding_1_content">Pantau pengumpulannya, dalam genggamanmu. Beri tanda dan pelajaran untuk yang tidak tepat waktu dalam pengumpulan.</string>
+    <string name="on_boarding_skip">lewati</string>
+    <string name="on_boarding_next">lanjut</string>
+    <string name="on_boarding_2_title">Buat pengumpulanmu semudah berkirim pesan</string>
+    <string name="on_boarding_2_content">Santai, dan biarkan kami yang urus untukmu. Hanya 5 menit kalau kamu menunda-nunda proses pembuatannya</string>
+
+    <!--  Profile Fragment  -->
+    <string name="tv_profile_title">Halo ini ruang pribadimu</string>
+    <string name="tv_profile_description">Ubah informasi pribadimu dan sesuaikan akses cloud storage yang kamu integrasikan.</string>
+    <string name="tv_profile_content_1_title">Informasi Pribadi</string>
+    <string name="tv_profile_content_2_title">Ubah Kata Sandi</string>
+    <string name="til_profile_new_confirm_password">Konfirmasi Password</string>
+    <string name="til_profile_new_password">Password Baru</string>
+    <string name="til_profile_current_password">Password Saat Ini</string>
+    <string name="til_profile_email">Alamat Email</string>
+    <string name="til_profile_name">Nama</string>
+    <string name="toast_profile_password_is_wrong">Password anda salah</string>
+    <string name="toast_profile_password_change_failed">Gagal untuk merubah password</string>
+    <string name="toast_profile_password_change_success">Password anda berhasil di ubah</string>
+    <string name="toast_profile_password_is_not_valid">Cek kembali password anda</string>
+    <string name="toast_profile_email_change_failed">Gagal untuk merubah email</string>
+    <string name="toast_profile_email_change_success">Email anda berhasil di ubah</string>
+    <string name="toast_profile_fullname_change_success">Nama anda berhasil di ubah</string>
+
+    <!--  Submission Activity  -->
+    <string name="iv_upload_file">ImageView of Upload File</string>
+    <string name="tv_submission_title">Nunggu itu nggak enak. \nJangan telat ngumpulin ya</string>
+    <string name="tv_submission_description">loading..</string>
+    <string name="tv_submission_time_title">Waktu Tersisa</string>
+    <string name="tv_submission_time_value">loading..</string>
+    <string name="tv_submission_time_value_no_due_date">No Due Date</string>
+    <string name="toast_submission_upload_on_back_pressed">"Tekan lagi untuk keluar"</string>
+    <string name="toast_submission_upload_file_success">Berhasil mengunggah berkas</string>
+    <string name="toast_submission_upload_file_failed">Gagal mengunggah berkas</string>
+    <string name="toast_submission_load_failed">Pengumpulan tidak tersedia</string>
+    <string name="intent_chooser_submission_upload_file">Pilih berkas untuk diunggah</string>
+    <string name="count_down_days">Hari</string>
+    <string name="count_down_hours">Jam</string>
+    <string name="count_down_minutes">Menit</string>
+    <string name="count_down_seconds">Detik</string>
+
+    <!--   Submission Alert Dialog  -->
+    <string name="dialog_submission_title">Konfirmasi Unggah Berkas</string>
+    <string name="dialog_submission_message_prefix">Apakah anda yakin ingin mengunggah berkas untuk</string>
+    <string name="dialog_submission_message_infix">dengan nama</string>
+    <string name="dialog_submission_message_suffix">\?</string>
+    <string name="dialog_submission_confirm_positive">Ya</string>
+    <string name="dialog_submission_confirm_negative">Tidak</string>
 
 </resources>

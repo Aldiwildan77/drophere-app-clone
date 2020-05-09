@@ -23,13 +23,36 @@
             android:label="Buat Halaman"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ActionBarTheme" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Register"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ForgotPassword"
+            android:label="Lupa Password"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ManagePageActivity"
+            android:label="Drophere Clone"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SubmissionActivity"
+            android:label="Pengumpulan Tugas"
+            android:parentActivityName=".ManagePageActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".OnBoardingActivity" />
     </application>
 
 </manifest>

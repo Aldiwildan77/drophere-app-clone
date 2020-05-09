@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubmissionActivity">
+
+    <ImageView
+        android:id="@+id/iv_upload_file"
+        android:layout_width="260dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="100dp"
+        android:contentDescription="@string/iv_upload_file"
+        android:src="@drawable/draw_upload_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_submission_title"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
+        android:layout_marginTop="@dimen/margin_vertical_small"
+        android:maxLines="2"
+        android:text="@string/tv_submission_title"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/colorText"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/iv_upload_file"
+        app:layout_constraintStart_toStartOf="@id/iv_upload_file"
+        app:layout_constraintTop_toBottomOf="@+id/iv_upload_file" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_submission_description"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_vertical_small"
+        android:maxLines="5"
+        android:text="@string/tv_submission_description"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@+id/iv_upload_file"
+        app:layout_constraintStart_toStartOf="@+id/iv_upload_file"
+        app:layout_constraintTop_toBottomOf="@+id/tv_submission_title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_submission_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_vertical_small"
+        android:maxLines="1"
+        android:text="@string/tv_submission_time_title"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@+id/iv_upload_file"
+        app:layout_constraintStart_toStartOf="@+id/iv_upload_file"
+        app:layout_constraintTop_toBottomOf="@+id/tv_submission_description" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_submission_time_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_vertical_small"
+        android:maxLines="1"
+        android:text="@string/tv_submission_time_value"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/colorText"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/iv_upload_file"
+        app:layout_constraintStart_toStartOf="@+id/iv_upload_file"
+        app:layout_constraintTop_toBottomOf="@+id/tv_submission_time_title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_upload_file"
+        style="@style/ButtonPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
+        android:layout_marginBottom="@dimen/margin_vertical_extra_small"
+        android:height="@dimen/button_height"
+        android:text="@string/button_submit_file"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
