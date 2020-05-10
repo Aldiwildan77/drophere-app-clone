@@ -1,6 +1,8 @@
 package com.papbl.drophereclone
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -135,6 +137,7 @@ class CreatePageActivity : AppCompatActivity(), View.OnClickListener,
     private fun createNewPage(pages: Pages) {
         pageCollection.add(pages)
             .addOnSuccessListener {
+                setResult(Activity.RESULT_OK, Intent())
                 finish()
             }.addOnFailureListener { e ->
                 Toast.makeText(this, resources.getString(R.string.toast_page_something_wrong), Toast.LENGTH_SHORT).show()

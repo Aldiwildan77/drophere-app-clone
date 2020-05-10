@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 200 && resultCode == RESULT_OK) {
+        if ((requestCode == 200 || requestCode == 201) && resultCode == RESULT_OK) {
             listPage.clear()
             doPageListing()
         }

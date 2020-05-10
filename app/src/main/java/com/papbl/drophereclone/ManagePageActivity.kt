@@ -53,7 +53,8 @@ class ManagePageActivity : AppCompatActivity(),
                 return true
             }
             R.id.menu_item_add -> {
-                startActivity(Intent(this, CreatePageActivity::class.java))
+                val intent = Intent(this, CreatePageActivity::class.java)
+                homeFragment.startActivityForResult(intent, 201)
             }
             R.id.menu_item_user -> {
                 mFragmentManager.beginTransaction()
