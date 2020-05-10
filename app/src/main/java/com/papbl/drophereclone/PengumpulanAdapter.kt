@@ -23,7 +23,8 @@ class PengumpulanAdapter(
     private val items: ArrayList<SenderData>,
     private val deadline: String,
     private val ownerId: String,
-    private val uniqueCode: String
+    private val uniqueCode: String,
+    private val roomTitle: String
 ) :
     RecyclerView.Adapter<PengumpulanHolder>() {
 
@@ -34,7 +35,7 @@ class PengumpulanAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PengumpulanHolder {
         val inflater = LayoutInflater.from(parent.context)
             .inflate(R.layout.component_card_submit, parent, false)
-        return PengumpulanHolder(inflater, deadline, ownerId, uniqueCode)
+        return PengumpulanHolder(inflater, deadline, ownerId, uniqueCode, roomTitle)
     }
 
     override fun onBindViewHolder(holder: PengumpulanHolder, position: Int) {
@@ -47,7 +48,8 @@ class PengumpulanHolder(
     v: View,
     private val deadline: String,
     private val ownerId: String,
-    private val uniqueCode: String
+    private val uniqueCode: String,
+    private val roomTitle: String
 ) :
     RecyclerView.ViewHolder(v), View.OnClickListener {
     private val storageRef = Firebase.storage.reference
@@ -66,14 +68,20 @@ class PengumpulanHolder(
         fileRef = storageRef.child(ownerId + "_" + uniqueCode + "/" + senderData.fileName)
         val dateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
         dateFormat.timeZone = TimeZone.getDefault()
-        val deadlineDate = dateFormat.parse(deadline)
         val submitDate = senderData.submitAt.toDate()
-        if (submitDate > deadlineDate) {
-            chipSubmitStatus.text = itemView.context.getString(R.string.chips_submit_late)
-            chipSubmitStatus.setChipBackgroundColorResource(R.color.colorError)
-        } else {
+
+        if (deadline == "NO DUE DATE") {
             chipSubmitStatus.text = itemView.context.getString(R.string.chips_submit_on_time)
+        } else {
+            val deadlineDate = dateFormat.parse(deadline)
+            if (submitDate > deadlineDate) {
+                chipSubmitStatus.text = itemView.context.getString(R.string.chips_submit_late)
+                chipSubmitStatus.setChipBackgroundColorResource(R.color.colorError)
+            } else {
+                chipSubmitStatus.text = itemView.context.getString(R.string.chips_submit_on_time)
+            }
         }
+
         tvSendDate.text = dateFormat.format(submitDate)
         tvSenderName.text = senderData.fullName
         tvSenderFileName.text = senderData.fileName
@@ -84,7 +92,8 @@ class PengumpulanHolder(
         val fileName = tvSenderFileName.text.toString()
         val folderRoot = File("/storage/emulated/0/Drop Here/")
         if (!folderRoot.exists()) folderRoot.mkdir()
-        val folderDir = File(folderRoot, ownerId + "_" + uniqueCode)
+        // ownerId + "_" + uniqueCode
+        val folderDir = File(folderRoot, roomTitle)
         folderDir.mkdir()
         val file = File(folderDir, fileName)
         fileRef.getFile(file).addOnSuccessListener {

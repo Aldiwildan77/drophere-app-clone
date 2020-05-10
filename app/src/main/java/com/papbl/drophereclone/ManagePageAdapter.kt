@@ -7,7 +7,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.papbl.drophereclone.models.ItemPage
@@ -15,10 +14,12 @@ import kotlinx.android.synthetic.main.component_card_pages.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
     RecyclerView.Adapter<ManagePageAdapter.ManageViewHolder>() {
 
     class ManageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         fun bind(itemPage: ItemPage) {
             with(itemView) {
                 if (itemPage.deadline == null) {
@@ -33,35 +34,24 @@ class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
                 tv_card_title.text = itemPage.title
                 tv_unique_code_value.text = itemPage.unique_code
                 card_page.setOnClickListener {
-                    val intent = Intent(context, PengumpulanActivity::class.java)
-                    intent.putExtra("unique_code", tv_unique_code_value?.text)
-                    context.startActivity(intent)
+                    val intent = Intent(context, PengumpulanActivity::class.java).apply {
+                        putExtra("unique_code", tv_unique_code_value?.text)
+                    }
+                    ManagePageActivity.homeFragment.startActivityForResult(intent, 200)
                 }
                 ib_unique_code_copy.setOnClickListener {
                     val clipboard =
                         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("Kode Unik", tv_unique_code_value.text)
                     clipboard.setPrimaryClip(clip)
-                    Toast.makeText(context, "Kode unik berhasil disalin!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Kode unik berhasil disalin!", Toast.LENGTH_SHORT)
+                        .show()
                 }
-                ib_more_popup.setOnClickListener {
-                    PopupMenu(context, ib_more_popup).apply {
-                        inflate(R.menu.option_menu_item)
-                        setOnMenuItemClickListener { item ->
+                ib_more_popup.apply {
+                    alpha = 0f
+                    isEnabled = false
+                }
 
-                            when (item!!.itemId) {
-                                R.id.menu_item_pages_edit -> {
-                                    Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
-                                }
-                                R.id.menu_item_pages_delete -> {
-                                    Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                            true
-                        }
-                        show()
-                    }
-                }
             }
         }
 
@@ -71,7 +61,8 @@ class ManagePageAdapter(private val listPage: ArrayList<ItemPage>) :
         parent: ViewGroup,
         viewType: Int
     ): ManageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.component_card_pages, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.component_card_pages, parent, false)
         return ManageViewHolder(view)
     }
 

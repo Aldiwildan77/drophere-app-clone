@@ -214,6 +214,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 }
         } else if (v?.id == btnLogout.id) {
             if (credential.clearLoggedInUser(requireActivity())) {
+                mAuth!!.signOut()
                 startActivity(Intent(activity, LoginActivity::class.java))
                 activity?.finish()
             }

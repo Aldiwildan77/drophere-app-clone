@@ -1,6 +1,7 @@
 package com.papbl.drophereclone
 
 import android.Manifest
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -55,19 +56,23 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var tvUniqueCode: MaterialTextView
     private lateinit var ibUniqueCode: ImageButton
     private lateinit var ibPopupAction: ImageButton
-    private lateinit var btnUndugBerkas: MaterialButton
-    private lateinit var rvFileTerkumpul: RecyclerView
+    private lateinit var btnSenderInfo: ImageButton
+    private lateinit var btnDownloadFile: MaterialButton
+    private lateinit var rvFileSubmitted: RecyclerView
 
     private lateinit var senders: ArrayList<Map<Any?, Any?>>
     private var senderData: ArrayList<SenderData> = ArrayList()
+    private var roomPassword: String? = null
 
-    private val KEY_EXTRA_UNIQUE_CODE: String = "unique_code"
     private lateinit var filterUniqueCode: String
     private lateinit var filterOwnerId: String
     private lateinit var ownerId: String
     private lateinit var uniqueCode: String
 
-    private val WRITE_EXT_STORAGE_PERMISSION = 423
+    companion object {
+        private const val KEY_EXTRA_UNIQUE_CODE: String = "unique_code"
+        private const val WRITE_EXT_STORAGE_PERMISSION = 423
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,12 +88,14 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
         tvUniqueCode = findViewById(R.id.tv_unique_code_value)
         ibUniqueCode = findViewById(R.id.ib_unique_code_copy)
         ibPopupAction = findViewById(R.id.ib_more_popup)
-        btnUndugBerkas = findViewById(R.id.btn_unduh_berkas)
-        rvFileTerkumpul = findViewById(R.id.rv_file_terkumpul)
+        btnDownloadFile = findViewById(R.id.btn_unduh_berkas)
+        btnSenderInfo = findViewById(R.id.ib_more_sender_popup)
+        rvFileSubmitted = findViewById(R.id.rv_file_terkumpul)
 
         ibUniqueCode.setOnClickListener(this)
         ibPopupAction.setOnClickListener(this)
-        btnUndugBerkas.setOnClickListener(this)
+        btnDownloadFile.setOnClickListener(this)
+        btnSenderInfo.setOnClickListener(this)
 
         query = pageCollection
             .whereEqualTo("ownerId", filterOwnerId)
@@ -110,13 +117,14 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
             ibPopupAction.id -> {
                 showActionMenu(v)
             }
-            btnUndugBerkas.id -> {
+            btnDownloadFile.id -> {
                 val folderRoot = File("/storage/emulated/0/Drop Here/")
                 if (!folderRoot.exists()) folderRoot.mkdir()
-                val folderDir = File(folderRoot, ownerId + "_" + uniqueCode)
+                // ownerId + "_" + uniqueCode
+                val folderDir = File(folderRoot, tvTitle.text.toString())
                 folderDir.mkdir()
                 val folderRef = storageRef.child(ownerId + "_" + uniqueCode)
-                if (rvFileTerkumpul.adapter?.itemCount != 0) {
+                if (rvFileSubmitted.adapter?.itemCount != 0) {
                     MaterialAlertDialogBuilder(this).apply {
                         setTitle("Unduh Berkas")
                         setMessage(
@@ -131,6 +139,15 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                     Toast.makeText(this, "Belum ada yang mengumpulkan tugas", Toast.LENGTH_SHORT)
                         .show()
                 }
+            }
+            btnSenderInfo.id -> {
+                MaterialAlertDialogBuilder(this).apply {
+                    setTitle("Lokasi Penyimpanan Berkas")
+                    setMessage("/storage/emulated/0/Drop Here/")
+                    setPositiveButton(resources.getString(R.string.dialog_submission_confirm_positive)) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                }.show()
             }
         }
     }
@@ -163,13 +180,20 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     private fun getPageDetail() {
         query.addOnSuccessListener { documents ->
             for (document in documents) {
-                val deadline: Timestamp = document.data["deadline"] as Timestamp
+                val deadline: Timestamp? = document.data["deadline"] as? Timestamp
                 val simpleDateFormat =
                     SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
                 simpleDateFormat.timeZone = TimeZone.getDefault()
                 ownerId = document.data["ownerId"].toString()
                 uniqueCode = document.data["unique_code"].toString()
-                tvDeadline.text = simpleDateFormat.format(deadline.toDate())
+                tvDeadline.text =
+                    if (deadline == null) {
+                        resources.getString(R.string.card_pages_tv_no_due_date)
+                    } else {
+                        simpleDateFormat.format(deadline.toDate())
+                    }
+                roomPassword =
+                    if (document.data["password"].toString() != "null") document.data["password"].toString() else null
                 tvTitle.text = document.data["title"].toString()
                 tvUniqueCode.text = (uniqueCode)
                 if (document.data["senders"] != null) {
@@ -188,13 +212,14 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         senderData.add(sender)
                     }
                 }
-                rvFileTerkumpul.apply {
+                rvFileSubmitted.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = PengumpulanAdapter(
                         senderData,
                         tvDeadline.text.toString(),
                         ownerId,
-                        uniqueCode
+                        uniqueCode,
+                        tvTitle.text.toString()
                     )
                 }
             }
@@ -232,6 +257,16 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.menu_show_password -> {
+                if (roomPassword.isNullOrEmpty()) {
+                    Toast.makeText(this, "Tidak ada password halaman", Toast.LENGTH_SHORT).show()
+                } else {
+                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip: ClipData = ClipData.newPlainText("Password Pengumpulan", roomPassword)
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(this, "Password berhasil disalin!", Toast.LENGTH_SHORT).show()
+                }
+            }
             R.id.menu_edit -> {
                 Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show()
             }
@@ -248,6 +283,7 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         }
                         Toast.makeText(context, "Pengumpulan berhasil dihapus", Toast.LENGTH_SHORT)
                             .show()
+                        setResult(Activity.RESULT_OK, Intent())
                         finish()
                     }
                     setNegativeButton("Tidak") { _, _ -> }

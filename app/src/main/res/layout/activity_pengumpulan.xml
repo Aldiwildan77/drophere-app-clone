@@ -46,6 +46,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_unduh_berkas" />
 
+    <ImageButton
+        android:id="@+id/ib_more_sender_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/card_pages_ib_popup_menu"
+        android:src="@drawable/ic_mdi_more_vert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_file_terkumpul" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_file_terkumpul"
         android:layout_width="match_parent"

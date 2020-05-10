@@ -1,6 +1,7 @@
 package com.papbl.drophereclone
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,14 +44,21 @@ class HomeFragment : Fragment() {
                 .setPositiveButton(resources.getString(R.string.dialog_submit)) { _, _ ->
                     val uniqueCode = textUniqueCode.text.toString()
                     findPage(uniqueCode)
-                }
-                .show()
+                }.show()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         listPage.clear()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 200 && resultCode == RESULT_OK) {
+            listPage.clear()
+            doPageListing()
+        }
     }
 
     private fun findPage(uniqueCode: String) {
@@ -114,6 +122,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun showRecyclerList() {
+        doPageListing()
+    }
+
+    private fun doPageListing() {
         getPageList { item: ArrayList<ItemPage> ->
             pb_load_list_page.visibility = View.GONE
             listPage.addAll(item)
@@ -130,7 +142,9 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { result ->
                 val listPage: ArrayList<ItemPage> = arrayListOf()
                 for (document in result) {
-                    if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid) {
+                    if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid
+                        && !(document.getBoolean("deleted") as Boolean)
+                    ) {
                         listPage.add(
                             ItemPage(
                                 document.id,
