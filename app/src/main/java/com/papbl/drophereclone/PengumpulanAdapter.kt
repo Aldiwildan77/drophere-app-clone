@@ -89,11 +89,10 @@ class PengumpulanHolder(
 
     override fun onClick(v: View) {
         val senderName = tvSenderName.text.toString()
-        val fileName = tvSenderFileName.text.toString()
+        val fileName = senderName + "_" + tvSenderFileName.text.toString()
         val folderRoot = File("/storage/emulated/0/Drop Here/")
         if (!folderRoot.exists()) folderRoot.mkdir()
-        // ownerId + "_" + uniqueCode
-        val folderDir = File(folderRoot, roomTitle)
+        val folderDir = File(folderRoot, uniqueCode + "_" + roomTitle)
         folderDir.mkdir()
         val file = File(folderDir, fileName)
         fileRef.getFile(file).addOnSuccessListener {

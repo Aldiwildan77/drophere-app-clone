@@ -120,8 +120,8 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
             btnDownloadFile.id -> {
                 val folderRoot = File("/storage/emulated/0/Drop Here/")
                 if (!folderRoot.exists()) folderRoot.mkdir()
-                // ownerId + "_" + uniqueCode
-                val folderDir = File(folderRoot, tvTitle.text.toString())
+                val folderDir =
+                    File(folderRoot, uniqueCode + "_" + tvTitle.text.toString())
                 folderDir.mkdir()
                 val folderRef = storageRef.child(ownerId + "_" + uniqueCode)
                 if (rvFileSubmitted.adapter?.itemCount != 0) {
