@@ -8,6 +8,7 @@
     <string name="button_download_file">Unduh Berkas</string>
     <string name="button_upload_file">Unggah Berkas</string>
     <string name="button_create_page">Buat Halaman</string>
+    <string name="button_edit_page">Ubah Halaman</string>
     <string name="button_edit_changes">Simpan Perubahan</string>
     <string name="button_login_account">Masuk</string>
     <string name="button_logout_account">Keluar</string>
@@ -40,8 +41,8 @@
     <string name="menu_item_add">Tambah</string>
 
     <!--  Action Pengumpulan -->
-    <string name="menu_item_show_password">Lihat Password</string>
-    <string name="menu_item_edit">Edit</string>
+    <string name="menu_item_copy_password">Salin Password</string>
+    <string name="menu_item_edit">Ubah Informasi</string>
     <string name="menu_item_delete">Hapus</string>
     <string name="file_terkumpul">File Terkumpul</string>
 

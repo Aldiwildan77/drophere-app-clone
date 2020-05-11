@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,11 +47,6 @@ class HomeFragment : Fragment() {
                     findPage(uniqueCode)
                 }.show()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        listPage.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -137,29 +133,37 @@ class HomeFragment : Fragment() {
     }
 
     private fun getPageList(callback: (item: ArrayList<ItemPage>) -> Unit) {
-        pageCollection
-            .get()
-            .addOnSuccessListener { result ->
-                val listPage: ArrayList<ItemPage> = arrayListOf()
-                for (document in result) {
-                    if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid
-                        && !(document.getBoolean("deleted") as Boolean)
-                    ) {
-                        listPage.add(
-                            ItemPage(
-                                document.id,
-                                document.getTimestamp("deadline"),
-                                document.getBoolean("deleted")!!,
-                                document.getString("description"),
-                                document.getString("ownerId"),
-                                document.getString("password"),
-                                document.getString("title"),
-                                document.getString("unique_code")
-                            )
-                        )
-                    }
-                }
-                callback.invoke(listPage)
+        pageCollection.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("HomeFragment", "listen:error", e)
+                return@addSnapshotListener
             }
+
+            val listPage: ArrayList<ItemPage> = arrayListOf()
+            for (document in snapshot!!) {
+                if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid
+                    && !(document.getBoolean("deleted") as Boolean)
+                ) {
+                    listPage.add(
+                        ItemPage(
+                            document.id,
+                            document.getTimestamp("deadline"),
+                            document.getBoolean("deleted")!!,
+                            document.getString("description"),
+                            document.getString("ownerId"),
+                            document.getString("password"),
+                            document.getString("title"),
+                            document.getString("unique_code")
+                        )
+                    )
+                }
+            }
+            callback.invoke(listPage)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        listPage.clear()
     }
 }

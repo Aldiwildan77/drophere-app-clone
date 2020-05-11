@@ -65,6 +65,8 @@
         android:id="@+id/rv_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_vertical_tiny"
+        android:layout_marginBottom="@dimen/margin_vertical_tiny"
         tools:listitem="@layout/component_card_pages" />
 
 </LinearLayout>

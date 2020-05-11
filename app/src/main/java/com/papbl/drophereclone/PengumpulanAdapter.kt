@@ -20,7 +20,7 @@ import java.util.*
 
 
 class PengumpulanAdapter(
-    private val items: ArrayList<SenderData>,
+    private val items: ArrayList<PengumpulanActivity.SenderData>,
     private val deadline: String,
     private val ownerId: String,
     private val uniqueCode: String,
@@ -39,7 +39,7 @@ class PengumpulanAdapter(
     }
 
     override fun onBindViewHolder(holder: PengumpulanHolder, position: Int) {
-        val senderData: SenderData = items[position]
+        val senderData: PengumpulanActivity.SenderData = items[position]
         holder.bind(senderData)
     }
 }
@@ -64,7 +64,7 @@ class PengumpulanHolder(
         v.setOnClickListener(this)
     }
 
-    fun bind(senderData: SenderData) {
+    fun bind(senderData: PengumpulanActivity.SenderData) {
         fileRef = storageRef.child(ownerId + "_" + uniqueCode + "/" + senderData.fileName)
         val dateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
         dateFormat.timeZone = TimeZone.getDefault()

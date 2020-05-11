@@ -19,13 +19,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
@@ -36,20 +35,13 @@ import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 
-data class SenderData(
-    val fileName: String,
-    val fullName: String,
-    val submitAt: Timestamp,
-    val userId: String
-)
-
 class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     PopupMenu.OnMenuItemClickListener {
     private val credential = UserCredential()
     private val db = FirebaseFirestore.getInstance()
     private val pageCollection = db.collection("pages")
     private val storageRef = Firebase.storage.reference
-    private lateinit var query: Task<QuerySnapshot>
+    private lateinit var query: Query
 
     private lateinit var tvDeadline: MaterialTextView
     private lateinit var tvTitle: MaterialTextView
@@ -72,7 +64,15 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     companion object {
         private const val KEY_EXTRA_UNIQUE_CODE: String = "unique_code"
         private const val WRITE_EXT_STORAGE_PERMISSION = 423
+        private const val TAG = "PengumpulanActivity"
     }
+
+    data class SenderData(
+        val fileName: String,
+        val fullName: String,
+        val submitAt: Timestamp,
+        val userId: String
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +101,6 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
             .whereEqualTo("ownerId", filterOwnerId)
             .whereEqualTo("unique_code", filterUniqueCode)
             .whereEqualTo("deleted", false)
-            .get()
 
         getPageDetail()
     }
@@ -178,14 +177,18 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun getPageDetail() {
-        query.addOnSuccessListener { documents ->
-            for (document in documents) {
-                val deadline: Timestamp? = document.data["deadline"] as? Timestamp
-                val simpleDateFormat =
-                    SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
+        query.addSnapshotListener { snapshots, e ->
+            if (e != null) {
+                Log.w(TAG, "listen:error", e)
+                return@addSnapshotListener
+            }
+
+            for (document in snapshots!!) {
+                val deadline = document.getTimestamp("deadline")
+                val simpleDateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
                 simpleDateFormat.timeZone = TimeZone.getDefault()
-                ownerId = document.data["ownerId"].toString()
-                uniqueCode = document.data["unique_code"].toString()
+                ownerId = document.getString("ownerId")!!
+                uniqueCode = document.getString("unique_code")!!
                 tvDeadline.text =
                     if (deadline == null) {
                         resources.getString(R.string.card_pages_tv_no_due_date)
@@ -193,11 +196,12 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         simpleDateFormat.format(deadline.toDate())
                     }
                 roomPassword =
-                    if (document.data["password"].toString() != "null") document.data["password"].toString() else null
-                tvTitle.text = document.data["title"].toString()
+                    if (document.getString("password") != "null") document.getString("password") else null
+                tvTitle.text = document.getString("title")
                 tvUniqueCode.text = (uniqueCode)
-                if (document.data["senders"] != null) {
-                    senders = document.data["senders"] as ArrayList<Map<Any?, Any?>>
+
+                if (document.get("senders") != null) {
+                    senders = document.get("senders") as ArrayList<Map<Any?, Any?>>
                     senders.sortWith(Comparator { o1, o2 ->
                         val data1 = o1?.get("submit_at") as Timestamp
                         val data2 = o2?.get("submit_at") as Timestamp
@@ -212,6 +216,7 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         senderData.add(sender)
                     }
                 }
+
                 rvFileSubmitted.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = PengumpulanAdapter(
@@ -241,7 +246,7 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         Toast.LENGTH_SHORT
                     ).show()
                 }.addOnFailureListener { error ->
-                    Log.e("PengumpulanActivity", error.message.toString())
+                    Log.e(TAG, error.message.toString())
                 }
             }
         }
@@ -268,7 +273,10 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
             R.id.menu_edit -> {
-                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, EditPageActivity::class.java).apply {
+                    putExtra("unique_code", tvUniqueCode.text)
+                }
+                startActivity(intent)
             }
             R.id.menu_hapus -> {
                 MaterialAlertDialogBuilder(this).apply {
@@ -277,7 +285,7 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
                         "Apa anda yakin ingin menghapus pengumpulan ini?"
                     )
                     setPositiveButton("Ya") { _, _ ->
-                        query.addOnSuccessListener {
+                        query.get().addOnSuccessListener {
                             val documentId = it.documents[0].id
                             pageCollection.document(documentId).update("deleted", true)
                         }
@@ -291,5 +299,10 @@ class PengumpulanActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        senderData.clear()
     }
 }

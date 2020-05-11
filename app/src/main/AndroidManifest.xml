@@ -14,6 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EditPageActivity"
+            android:label="Ubah Informasi"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ActionBarTheme" />
+        <activity
             android:name=".PengumpulanActivity"
             android:label="Pengumpulan"
             android:parentActivityName=".MainActivity"
