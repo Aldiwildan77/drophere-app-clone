@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Card"
+    android:id="@+id/card_page"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_vertical_extra_small">
+    android:layout_marginHorizontal="@dimen/margin_vertical_extra_small"
+    android:layout_marginTop="@dimen/margin_vertical_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -49,11 +51,11 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_card_title"
             android:layout_width="290dp"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_vertical_extra_small"
             android:layout_marginBottom="@dimen/margin_vertical_medium"
             android:maxLines="3"
-            android:text="@string/card_pages_tv_title"
+            android:text=""
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@color/colorText"
             android:textStyle="bold"
@@ -79,7 +81,7 @@
             android:id="@+id/tv_unique_code_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/card_pages_tv_unique_code_value"
+            android:text=""
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="parent"

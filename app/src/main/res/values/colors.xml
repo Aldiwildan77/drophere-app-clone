@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#0286c7</color>
+    <color name="colorPrimaryDark">#043353</color>
+    <color name="colorAccent">#F06A4F</color>
     <color name="colorError">#ff4e36</color>
     <color name="colorSuccess">#02c798</color>
     <color name="colorText">#293d5b</color>
     <color name="colorHomeBackground">#f4f6f8</color>
     <color name="colorTextWhite">#FFFFFF</color>
     <color name="colorAppBackground">#FFFFFF</color>
+    <color name="colorFieldDisabled">#E0E0E0</color>
 </resources>

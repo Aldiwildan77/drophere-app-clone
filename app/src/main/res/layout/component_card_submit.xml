@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Card"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginHorizontal="@dimen/margin_vertical_extra_small">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_vertical_tiny">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/margin_vertical_extra_small">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_submit_status"
             style="@style/ChipTheme"
-            android:text="@string/chips_submit_on_time"
-            android:layout_width="92.7dp"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
+            android:text="@string/chips_submit_on_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,12 +48,14 @@
             android:id="@+id/ib_sender_icon"
             android:layout_width="19dp"
             android:layout_height="19dp"
+            android:layout_marginTop="@dimen/margin_vertical_extra_small"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:contentDescription="@string/card_submit_ib_sender_icon"
             android:src="@drawable/ic_mdi_perm_identity"
             app:layout_constraintBottom_toTopOf="@+id/tv_sender_file"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chip_submit_status" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_sender_name"
