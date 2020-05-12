@@ -82,6 +82,7 @@ class SubmissionActivity : AppCompatActivity(), View.OnClickListener {
 
             if (countDown <= 0L) {
                 toastMessage(resources.getString(R.string.toast_submission_load_failed))
+                setResult(202, Intent())
                 finish()
             }
 
@@ -142,6 +143,7 @@ class SubmissionActivity : AppCompatActivity(), View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == READ_EXT_STORAGE_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                setResult(202, Intent())
                 finish()
             }
         }
@@ -189,6 +191,7 @@ class SubmissionActivity : AppCompatActivity(), View.OnClickListener {
                     .update("senders", FieldValue.arrayUnion(submissionData))
                     .addOnSuccessListener {
                         toastMessage(resources.getString(R.string.toast_submission_upload_file_success))
+                        setResult(202, Intent())
                         finish()
                     }
                     .addOnFailureListener { e ->
@@ -227,6 +230,7 @@ class SubmissionActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFinish() {
+                setResult(202, Intent())
                 finish()
             }
         }

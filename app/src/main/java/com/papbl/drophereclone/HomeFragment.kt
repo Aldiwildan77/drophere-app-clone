@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == 200 || requestCode == 201) && resultCode == RESULT_OK) {
+        if ((requestCode == 200 || requestCode == 201 || requestCode == 202) && resultCode == RESULT_OK) {
             listPage.clear()
             doPageListing()
         }
@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
                         } else {
                             val intentTest = Intent(activity, SubmissionActivity::class.java)
                             intentTest.putExtra("extra_page", page)
-                            startActivity(intentTest)
+                            startActivityForResult(intentTest, 202)
                             return@addOnSuccessListener
                         }
                     }
@@ -104,7 +104,7 @@ class HomeFragment : Fragment() {
                 if (textInputPassword == page.password) {
                     val intent = Intent(activity, SubmissionActivity::class.java)
                     intent.putExtra("extra_page", page)
-                    startActivity(intent)
+                    startActivityForResult(intent, 202)
                 } else {
                     Toast.makeText(
                         context,
@@ -139,6 +139,7 @@ class HomeFragment : Fragment() {
                 return@addSnapshotListener
             }
 
+            listPage.clear()
             val listPage: ArrayList<ItemPage> = arrayListOf()
             for (document in snapshot!!) {
                 if (document.getString("ownerId") == credential.getLoggedUser(requireActivity()).uid
@@ -160,10 +161,5 @@ class HomeFragment : Fragment() {
             }
             callback.invoke(listPage)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        listPage.clear()
     }
 }

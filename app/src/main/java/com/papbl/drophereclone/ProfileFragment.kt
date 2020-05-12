@@ -187,11 +187,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             }
         } else if (v?.id == btnSavePassword.id) {
 
-            if (validateSubmitPassword()) {
-                toastMessage(resources.getString(R.string.toast_profile_password_is_not_valid))
-                return
-            }
-
             val currentCredential = EmailAuthProvider.getCredential(
                 credential.getLoggedUser(requireActivity()).email,
                 tfCurrentPassword.editText?.text.toString()
